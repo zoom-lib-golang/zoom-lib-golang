@@ -6,3 +6,9 @@ go:
 script:
   - ./fmtpolice
   - go test -v ./...
+notifications:
+  email:
+    recipients:
+      - webteam@himalayaninstitute.org
+    on_success: change
+    on_failure: change
