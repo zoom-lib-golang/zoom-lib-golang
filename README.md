@@ -1,5 +1,7 @@
 # Zoom.us Golang Client Library
 
+[![Build Status](https://travis-ci.org/himalayan-institute/zoom-lib-golang.svg?branch=master)](https://travis-ci.org/himalayan-institute/zoom-lib-golang)
+
 Go (Golang) client library for the [Zoom.us REST
 API](git@github.com:himalayan-institute/zoom-lib-golang.git).
 
