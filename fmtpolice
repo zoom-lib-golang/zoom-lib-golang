@@ -16,6 +16,7 @@ __gofiles() {
 check_fmt() {
   eval "set -e"
   for file in $(__gofiles) ; do
+    echo "checking gofmt for $file"
     gofmt $file | diff -u $file -
   done
   eval "set +e"
