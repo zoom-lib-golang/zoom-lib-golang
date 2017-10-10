@@ -2,6 +2,12 @@ package zoom // types for /user requests
 
 import "time"
 
+// UserType is one of a fixed number of possible user types
+type UserType int
+
+// UserLoginType is one of a fixed number of possible user login type
+type UserLoginType int
+
 const (
 	// Basic user type
 	Basic UserType = 1
@@ -11,10 +17,22 @@ const (
 
 	// Corporate user type
 	Corporate UserType = 3
-)
 
-// UserType is one of a fixed number of possible user types
-type UserType int
+	//SnsFacebook user login type
+	SnsFacebook UserLoginType = 0
+
+	//SnsGoogle user login type
+	SnsGoogle UserLoginType = 1
+
+	//SnsAPI user login type
+	SnsAPI UserLoginType = 99
+
+	// SnsZoom user login type
+	SnsZoom UserLoginType = 100
+
+	// SnsSSO single sign on user login type
+	SnsSSO UserLoginType = 101
+)
 
 // String provides a string representation of user types
 func (t UserType) String() (str string) {

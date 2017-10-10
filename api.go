@@ -61,7 +61,15 @@ func NewClient(apiKey string, apiSecret string) *Client {
 	}
 }
 
-func request(c *Client, path string, parameters interface{}) ([]byte, error) {
+func request(c *Client, path string, parameters interface{}, ret interface{}) error {
+	if c == nil {
+		if defaultClient == nil {
+			defaultClient = NewClient(APIKey, APISecret)
+		}
+
+		c = defaultClient
+	}
+
 	// allow variadic parameters
 	switch reflect.TypeOf(parameters).Kind() {
 	case reflect.Slice:
@@ -75,7 +83,7 @@ func request(c *Client, path string, parameters interface{}) ([]byte, error) {
 
 	values, err := query.Values(parameters)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	values.Set("api_key", c.Key)
@@ -96,13 +104,13 @@ func request(c *Client, path string, parameters interface{}) ([]byte, error) {
 	// all v1 API endpoints use POST requests
 	resp, err := client.PostForm(requestURL, values)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	if Debug {
@@ -110,23 +118,6 @@ func request(c *Client, path string, parameters interface{}) ([]byte, error) {
 	}
 
 	if err := checkError(body); err != nil {
-		return nil, err
-	}
-
-	return body, nil
-}
-
-func executeRequest(c *Client, path string, parameters interface{}, ret interface{}) error {
-	if c == nil {
-		if defaultClient == nil {
-			defaultClient = NewClient(APIKey, APISecret)
-		}
-
-		c = defaultClient
-	}
-
-	body, err := request(c, path, parameters)
-	if err != nil {
 		return err
 	}
 
