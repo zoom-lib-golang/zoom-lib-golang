@@ -10,27 +10,8 @@ API](git@github.com:himalayan-institute/zoom-lib-golang.git).
 Built out of necessity, this repo will only support select endpoints at
 first. Hopefully, it will eventually support all Zoom API endpoints.
 
-## Getting Started
-
-Following is an example for how to use the Zoom API client:
-
-```golang
-package main
-
-// TODO: fill this out with an actual example
-
-import (
-  "fmt"
-  "os"
-
-  "github.com/himalayan-institute/zoom"
-)
-
-func main() {
-  fmt.Println("zoom!")
-  os.Exit(0)
-}
-```
+See the [\_examples](_examples/) directory for examples of how to use
+the Zoom API client.
 
 ## Contributing
 
@@ -39,5 +20,9 @@ guidelines](CONTRIBUTING.md) for more details.
 
 ## Contact
 
-For any questions regarding this library, please contact @rafecolton or
-the Himalayan Institute webteam at webteam@himalayaninstitute.org
+For any questions regarding this library, please contact
+[@rafecolton](https://github.com/rafecolton) or the Himalayan Institute
+webteam at webteam@himalayaninstitute.org
+
+Code inspired by
+[mattbaird/gochimp](https://github.com/mattbaird/gochimp)
