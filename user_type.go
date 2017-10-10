@@ -1,4 +1,4 @@
-package zoom // types for /user requests
+package zoom // types for /user endpoints
 
 import "time"
 
