@@ -1,19 +1,5 @@
 package zoom // types for /webinar endpoints
 
-// WebinarType is one of a fixed number of possible webinar types
-type WebinarType int
-
-const (
-	// TypeWebinar is the default webinar type
-	TypeWebinar WebinarType = 5
-
-	// TypeRecurringWebinar is a recurring webinar
-	TypeRecurringWebinar WebinarType = 6
-
-	// TypeRecurringWebinarFixedTime is a recurring webinar with fixed time
-	TypeRecurringWebinarFixedTime WebinarType = 9
-)
-
 // Webinar represents a webinar object
 type Webinar struct {
 	UUID                      string              `json:"uuid"`
@@ -43,4 +29,16 @@ type WebinarOccurrence struct {
 	OccurrenceID string `json:"occurrence_id"`
 	StartTime    *Time  `json:"start_time"`
 	Duration     int    `json:"duration"`
+}
+
+// WebinarRegistrant is returned when retrieving information about webinar
+// attendees from calls to /webinar/registration
+type WebinarRegistrant struct {
+	ID              string `json:"id"`
+	FirstName       string `json:"first_name"`
+	LastName        string `json:"last_name"`
+	CreateTime      *Time  `json:"create_time"`
+	Approval        string `json:"approval"`
+	Email           string `json:"email"`
+	RegistrationURL *URL   `json:"registration_url"`
 }
