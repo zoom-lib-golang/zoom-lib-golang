@@ -15,7 +15,7 @@ first. Hopefully, it will eventually support all Zoom API endpoints.
 
 - [ ] Calls to `/webinar/get` will return webinar occurrences that have
   been deleted with no indication of status (per [this
-ticket](https://support.zoom.us/hc/en-us/community/posts/115010565986--webinar-get-returns-deleted-occurrence)
+ticket](https://support.zoom.us/hc/en-us/community/posts/115010565986--webinar-get-returns-deleted-occurrence))
 
 ## Contributing
 
