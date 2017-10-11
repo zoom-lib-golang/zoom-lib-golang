@@ -9,5 +9,5 @@ notifications:
   email:
     recipients:
       - webteam@himalayaninstitute.org
-    on_success: change
+    on_success: never
     on_failure: change
