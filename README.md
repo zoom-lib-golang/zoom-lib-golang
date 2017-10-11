@@ -11,6 +11,12 @@ API](git@github.com:himalayan-institute/zoom-lib-golang.git).
 Built out of necessity, this repo will only support select endpoints at
 first. Hopefully, it will eventually support all Zoom API endpoints.
 
+## Known Issues
+
+- [ ] Calls to `/webinar/get` will return webinar occurrences that have
+  been deleted with no indication of status (per [this
+ticket](https://support.zoom.us/hc/en-us/community/posts/115010565986--webinar-get-returns-deleted-occurrence))
+
 ## Contributing
 
 Contributions welcome! Please see the [contributing
