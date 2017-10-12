@@ -42,3 +42,10 @@ type WebinarRegistrant struct {
 	Email           string `json:"email"`
 	RegistrationURL *URL   `json:"registration_url"`
 }
+
+// WebinarPanelist contains information returned by /webinar/panelists
+type WebinarPanelist struct {
+	Name    string `json:"name"`
+	Email   string `json:"email"`
+	JoinURL *URL   `json:"join_url"`
+}

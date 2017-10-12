@@ -1,11 +1,23 @@
 package zoom // Use this file for /webinar endpoints
 
 const (
-	listWebinarsPath             = "/webinar/list"
-	listRegistrationWebinarsPath = "/webinar/list/registration"
-	getWebinarInfoPath           = "/webinar/get"
-	registerForWebinarPath       = "/webinar/register"
-	getWebinarRegistrationInfo   = "/webinar/registration"
+	// ListWebinarsPath - v1 path to list webinars not requiring registration
+	ListWebinarsPath = "/webinar/list"
+
+	// ListRegistrationWebinarsPath - v1 path to list webinars requiring registration
+	ListRegistrationWebinarsPath = "/webinar/list/registration"
+
+	// GetWebinarInfoPath - v1 path for retrieving info on a single webinar
+	GetWebinarInfoPath = "/webinar/get"
+
+	// RegisterForWebinarPath - v1 path for registering a user for a webinar
+	RegisterForWebinarPath = "/webinar/register"
+
+	// GetWebinarRegistrationInfoPath - v1 path for listing registrants to a webinar
+	GetWebinarRegistrationInfoPath = "/webinar/registration"
+
+	// GetWebinarPanelistsPath - v1 path for listing panelists for a webinar
+	GetWebinarPanelistsPath = "/webinar/panelists"
 )
 
 // ListWebinarsResponse contains the response from a call to ListWebinars
@@ -34,7 +46,7 @@ func ListWebinars(opts ...ListWebinarsOptions) (ListWebinarsResponse, error) {
 // registration, using the client c
 func (c *Client) ListWebinars(opts ...ListWebinarsOptions) (ListWebinarsResponse, error) {
 	var ret = ListWebinarsResponse{}
-	return ret, request(c, listWebinarsPath, opts, &ret)
+	return ret, request(c, ListWebinarsPath, opts, &ret)
 }
 
 // ListRegistrationWebinars calls /webinar/list, listing all webinars that don't require
@@ -47,7 +59,7 @@ func ListRegistrationWebinars(opts ...ListWebinarsOptions) (ListWebinarsResponse
 // registration, using the client c
 func (c *Client) ListRegistrationWebinars(opts ...ListWebinarsOptions) (ListWebinarsResponse, error) {
 	var ret = ListWebinarsResponse{}
-	return ret, request(c, listRegistrationWebinarsPath, opts, &ret)
+	return ret, request(c, ListRegistrationWebinarsPath, opts, &ret)
 }
 
 // GetWebinarInfoOptions contains options for GetWebinarInfo
@@ -65,7 +77,7 @@ func GetWebinarInfo(opts ...GetWebinarInfoOptions) (Webinar, error) {
 // GetWebinarInfo calls /webinar/get, listing a single webinar, using client c
 func (c *Client) GetWebinarInfo(opts ...GetWebinarInfoOptions) (Webinar, error) {
 	var ret = Webinar{}
-	return ret, request(c, getWebinarInfoPath, opts, &ret)
+	return ret, request(c, GetWebinarInfoPath, opts, &ret)
 }
 
 // CustomQuestion is the type for custom questions on registration form
@@ -130,7 +142,7 @@ func RegisterForWebinar(opts ...RegisterForWebinarOptions) (RegisterForWebinarRe
 // RegisterForWebinar calls /webinar/register using client c
 func (c *Client) RegisterForWebinar(opts ...RegisterForWebinarOptions) (RegisterForWebinarResponse, error) {
 	var ret = RegisterForWebinarResponse{}
-	return ret, request(c, registerForWebinarPath, opts, &ret)
+	return ret, request(c, RegisterForWebinarPath, opts, &ret)
 }
 
 // GetWebinarRegistrationInfoOptions is the response object returned when registering
@@ -161,5 +173,28 @@ func GetWebinarRegistrationInfo(opts ...GetWebinarRegistrationInfoOptions) (GetW
 // GetWebinarRegistrationInfo calls /webinar/registration using client c
 func (c *Client) GetWebinarRegistrationInfo(opts ...GetWebinarRegistrationInfoOptions) (GetWebinarRegistrationInfoResponse, error) {
 	var ret = GetWebinarRegistrationInfoResponse{}
-	return ret, request(c, getWebinarRegistrationInfo, opts, &ret)
+	return ret, request(c, GetWebinarRegistrationInfoPath, opts, &ret)
+}
+
+// GetWebinarPanelistsOptions - options for retrieving webinar panelist info
+type GetWebinarPanelistsOptions struct {
+	WebinarID int    `url:"id"`
+	HostID    string `url:"host_id"`
+}
+
+// GetWebinarPanelistsResponse - response from call to /webinar/panelists
+type GetWebinarPanelistsResponse struct {
+	TotalRecords int               `json:"total_records"`
+	Panelists    []WebinarPanelist `json:"panelists"`
+}
+
+// GetWebinarPanelists calls /webinar/panelists using the default client
+func GetWebinarPanelists(opts ...GetWebinarPanelistsOptions) (GetWebinarPanelistsResponse, error) {
+	return defaultClient.GetWebinarPanelists(opts...)
+}
+
+// GetWebinarPanelists calls /webinar/panelists using client c
+func (c *Client) GetWebinarPanelists(opts ...GetWebinarPanelistsOptions) (GetWebinarPanelistsResponse, error) {
+	var ret = GetWebinarPanelistsResponse{}
+	return ret, request(c, GetWebinarPanelistsPath, opts, &ret)
 }
