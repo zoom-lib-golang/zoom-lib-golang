@@ -64,7 +64,7 @@ func ExampleWebinar() {
 	log.Printf("first occurence start: %s\n", webinar.Occurrences[0].StartTime)
 
 	customQs := []zoom.CustomQuestion{
-		zoom.CustomQuestion{
+		{
 			Title: "asdf foo bar",
 			Value: "example custom question answer",
 		},
