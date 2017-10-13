@@ -61,7 +61,7 @@ func ExampleWebinar() {
 	log.Printf("Got single webinars: %+v\n", webinar)
 
 	log.Printf("created at: %s\n", webinar.CreatedAt)
-	log.Printf("first occurence start: %s\n", webinar.Occurrences[0].StartTime)
+	log.Printf("first occurrence start: %s\n", webinar.Occurrences[0].StartTime)
 
 	customQs := []zoom.CustomQuestion{
 		{
