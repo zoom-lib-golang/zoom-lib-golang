@@ -34,13 +34,14 @@ type WebinarOccurrence struct {
 // WebinarRegistrant is returned when retrieving information about webinar
 // attendees from calls to /webinar/registration
 type WebinarRegistrant struct {
-	ID              string `json:"id"`
-	FirstName       string `json:"first_name"`
-	LastName        string `json:"last_name"`
-	CreateTime      *Time  `json:"create_time"`
-	Approval        string `json:"approval"`
-	Email           string `json:"email"`
-	RegistrationURL *URL   `json:"registration_url"`
+	ID               string `json:"id"`
+	FirstName        string `json:"first_name"`
+	LastName         string `json:"last_name"`
+	CreateTime       *Time  `json:"create_time"`
+	Approval         string `json:"approval"`
+	Email            string `json:"email"`
+	RegistrationURL  *URL   `json:"registration_url"`
+	RegistrationTime *Time  `json:"registration_time"`
 }
 
 // WebinarPanelist contains information returned by /webinar/panelists
