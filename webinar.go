@@ -18,6 +18,9 @@ const (
 
 	// GetWebinarPanelistsPath - v1 path for listing panelists for a webinar
 	GetWebinarPanelistsPath = "/webinar/panelists"
+
+	// ListRegistrantsPath - v1 path for listing panelists for a webinar
+	ListRegistrantsPath = "/webinar/registrants/list"
 )
 
 // ListWebinarsResponse contains the response from a call to ListWebinars
@@ -197,4 +200,38 @@ func GetWebinarPanelists(opts ...GetWebinarPanelistsOptions) (GetWebinarPanelist
 func (c *Client) GetWebinarPanelists(opts ...GetWebinarPanelistsOptions) (GetWebinarPanelistsResponse, error) {
 	var ret = GetWebinarPanelistsResponse{}
 	return ret, request(c, GetWebinarPanelistsPath, opts, &ret)
+}
+
+// ListRegistrantsOptions - options for calls to /webinar/registrants/list
+type ListRegistrantsOptions struct {
+	WebinarID  int                      `url:"id"`
+	HostID     string                   `url:"host_id"`
+	Type       *ListRegistrantsTypeType `url:"type,omitempty"`
+	PageSize   *int                     `url:"page_size,omitempty"`
+	PageNumber *int                     `url:"page_number,omitempty"`
+}
+
+// ListRegistrantsResponse - response for calls to /webinar/registrants/list
+type ListRegistrantsResponse struct {
+	PageCount    int                     `json:"page_count"`
+	PageNumber   int                     `json:"page_number"`
+	PageSize     int                     `json:"page_size"`
+	TotalRecords int                     `json:"total_records"`
+	Type         ListRegistrantsTypeType `json:"type"`
+	Registrants  []WebinarRegistrant     `json:"users"`
+}
+
+// ListRegistrants calls /webinar/registrants/list using the default client.
+// Note that this is only used for webinars that require manual approval. If
+// used with auto-approve webinars, you will receive error code 2008.
+func ListRegistrants(opts ...ListRegistrantsOptions) (ListRegistrantsResponse, error) {
+	return defaultClient.ListRegistrants(opts...)
+}
+
+// ListRegistrants calls /webinar/registrants/list using client c.  Note that
+// this is only used for webinars that require manual approval. If used with
+// auto-approve webinars, you will receive error code 2008.
+func (c *Client) ListRegistrants(opts ...ListRegistrantsOptions) (ListRegistrantsResponse, error) {
+	var ret = ListRegistrantsResponse{}
+	return ret, request(c, ListRegistrantsPath, opts, &ret)
 }

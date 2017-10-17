@@ -85,3 +85,15 @@ const (
 	// MoreThanTenThousand is "More than 10,000" employees
 	MoreThanTenThousand NumberOfEmployeesType = "More than 10,000"
 )
+
+// ListRegistrantsTypeType contains possible options for "type" field when
+// listing registrants
+type ListRegistrantsTypeType int
+
+const (
+	// PendingApprovalType - registrants pending approval
+	PendingApprovalType ListRegistrantsTypeType = 0
+
+	// ApprovedType - approved registrants
+	ApprovedType ListRegistrantsTypeType = 1
+)
