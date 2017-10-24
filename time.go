@@ -32,5 +32,5 @@ func (t *Time) MarshalJSON() ([]byte, error) {
 
 // String defines how time is printed out
 func (t *Time) String() string {
-	return fmt.Sprintf("\"%s\"", t.Time.Format(time.RFC3339))
+	return t.Time.Format(time.RFC3339)
 }
