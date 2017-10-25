@@ -34,10 +34,10 @@ func (u *URL) UnmarshalJSON(b []byte) (err error) {
 // MarshalJSON describes JSON unmarshaling for custom Time objects, handling
 // empty string values
 func (u *URL) MarshalJSON() ([]byte, error) {
-	return []byte(u.String()), nil
+	return []byte(fmt.Sprintf("\"%s\"", u.String())), nil
 }
 
 // String defines how time is printed out
 func (u *URL) String() string {
-	return fmt.Sprintf("\"%s\"", u.URL.String())
+	return u.URL.String()
 }
