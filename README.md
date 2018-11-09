@@ -4,8 +4,10 @@
 [![Build Status](https://travis-ci.org/himalayan-institute/zoom-lib-golang.svg?branch=master)](https://travis-ci.org/himalayan-institute/zoom-lib-golang)
 [![Go Report Card](https://goreportcard.com/badge/github.com/himalayan-institute/zoom-lib-golang)](https://goreportcard.com/report/github.com/himalayan-institute/zoom-lib-golang)
 
-Go (Golang) client library for the [Zoom.us REST
-API](git@github.com:himalayan-institute/zoom-lib-golang.git).
+Go (Golang) client library for the [Zoom.us REST API Version
+2](https://zoom.github.io/api/). See
+[here](https://gopkg.in/himalayan-institute/zoom-lib-golang.v1) for
+Version 1 support.
 
 ## About
 
