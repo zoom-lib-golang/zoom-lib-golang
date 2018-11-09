@@ -1,4 +1,22 @@
-# Zoom.us Golang Client Library
+# Zoom.us Golang Client Library (Zoom API v1)
+
+**💥DEPRECATION NOTICE💥**
+
+As of November 1, 2018, Zoom stopped supporting [Version
+1](https://zoom.github.io/api-v1/) of their API. This branch is for
+Version 1, and while you are welcome to use it for as long as Zoom
+continues to support v1, we will no longer be adding new features. We
+are still open to pull requests containing bug fixes, but we highly
+recommend you update to v2 on the `master` branch as soon as possible.
+We will do our best to maintain backwards compatibility.
+
+To use the v1 version of the Zoom API, import as follows:
+
+```golang
+import "gopkg.in/himalayan-institute/zoom-lib-golang.v1"
+```
+
+----
 
 [![Godoc](https://godoc.org/github.com/himalayan-institute/zoom-lib-golang?status.svg)](https://godoc.org/github.com/himalayan-institute/zoom-lib-golang)
 [![Build Status](https://travis-ci.org/himalayan-institute/zoom-lib-golang.svg?branch=master)](https://travis-ci.org/himalayan-institute/zoom-lib-golang)
