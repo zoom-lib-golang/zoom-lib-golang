@@ -6,6 +6,9 @@ type UserType int
 // UserLoginType is one of a fixed number of possible user login type
 type UserLoginType int
 
+// UserStatus is a user's active status, for ListUser
+type UserStatus string
+
 const (
 	// Basic user type
 	Basic UserType = 1
@@ -30,6 +33,15 @@ const (
 
 	// SSO single sign on user login type
 	SSO UserLoginType = 101
+
+	// Active status
+	Active UserStatus = "active"
+
+	// Inactive status
+	Inactive UserStatus = "inactive"
+
+	// Pending status
+	Pending UserStatus = "pending"
 )
 
 // String provides a string representation of user types

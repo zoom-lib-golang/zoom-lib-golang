@@ -29,7 +29,7 @@ As with any major API update, there are some breaking changes:
 - [ ] `GetWebinarRegistrationInfo`
 - [ ] `ListRegistrants`
 - [ ] `ListRegistrationWebinars`
-- [ ] `ListUsers`
+- [x] `ListUsers`
 - [ ] `ListWebinars`
 - [ ] `RegisterForWebinar`
 

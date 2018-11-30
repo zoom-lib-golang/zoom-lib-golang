@@ -19,8 +19,9 @@ type ListUsersResponse struct {
 
 // ListUsersOptions contains options for ListUsers
 type ListUsersOptions struct {
-	PageSize   int `url:"page_size"`
-	PageNumber int `url:"page_number"`
+	PageSize   int         `url:"page_size"`
+	PageNumber int         `url:"page_number"`
+	Status     *UserStatus `url:"status,omitempty"`
 }
 
 // ListUsers calls /user/list, listing all users, using the default client
@@ -31,7 +32,7 @@ func ListUsers(opts ...ListUsersOptions) (ListUsersResponse, error) {
 // ListUsers calls /user/list, listing all users, using client c
 func (c *Client) ListUsers(opts ...ListUsersOptions) (ListUsersResponse, error) {
 	var ret = ListUsersResponse{}
-	return ret, request(c, listUsersPath, opts, &ret)
+	return ret, requestV2(c, Get, listUsersPath, opts, nil, &ret)
 }
 
 // GetUserOpts contains options for GetUser
