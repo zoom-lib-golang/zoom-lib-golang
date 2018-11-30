@@ -9,6 +9,30 @@ Go (Golang) client library for the [Zoom.us REST API Version
 [here](https://gopkg.in/himalayan-institute/zoom-lib-golang.v1) for
 Version 1 support.
 
+## v2 TODO
+
+### Compatibility Notes
+
+As with any major API update, there are some breaking changes:
+
+* `GetUser` and `GetUserByEmail` have been combined into GetUser, which
+  now has a signature more similar to GetUserByEmail
+* User Login Type (`UserLoginType`) names have been upated to match Zoom
+  documentation
+
+### Convert Endpoints
+
+- [x] `GetUser`
+- [x] `GetUserByEmail` *(deprecated)*
+- [ ] `GetWebinarInfo`
+- [ ] `GetWebinarPanelist`
+- [ ] `GetWebinarRegistrationInfo`
+- [ ] `ListRegistrants`
+- [ ] `ListRegistrationWebinars`
+- [ ] `ListUsers`
+- [ ] `ListWebinars`
+- [ ] `RegisterForWebinar`
+
 ## About
 
 Built out of necessity, this repo will only support select endpoints at

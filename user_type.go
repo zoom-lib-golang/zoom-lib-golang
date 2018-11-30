@@ -16,20 +16,20 @@ const (
 	// Corporate user type
 	Corporate UserType = 3
 
-	//SnsFacebook user login type
-	SnsFacebook UserLoginType = 0
+	//Facebook user login type
+	Facebook UserLoginType = 0
 
-	//SnsGoogle user login type
-	SnsGoogle UserLoginType = 1
+	//Google user login type
+	Google UserLoginType = 1
 
-	//SnsAPI user login type
-	SnsAPI UserLoginType = 99
+	//API user login type
+	API UserLoginType = 99
 
-	// SnsZoom user login type
-	SnsZoom UserLoginType = 100
+	// Zoom user login type
+	Zoom UserLoginType = 100
 
-	// SnsSSO single sign on user login type
-	SnsSSO UserLoginType = 101
+	// SSO single sign on user login type
+	SSO UserLoginType = 101
 )
 
 // String provides a string representation of user types

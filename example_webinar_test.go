@@ -21,9 +21,7 @@ func ExampleWebinar() {
 	zoom.APISecret = apiSecret
 	zoom.Debug = true
 
-	user, err := zoom.GetUserByEmail(zoom.GetUserByEmailOptions{
-		Email: email,
-	})
+	user, err := zoom.GetUser(zoom.GetUserOpts{EmailOrID: email})
 	if err != nil {
 		log.Fatalf("got error listing users: %+v\n", err)
 	}

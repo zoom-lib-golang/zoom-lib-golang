@@ -26,9 +26,7 @@ func ExampleUser() {
 
 	client := zoom.NewClient(apiKey, apiSecret)
 
-	user, err := client.GetUserByEmail(zoom.GetUserByEmailOptions{
-		Email: email,
-	})
+	user, err := client.GetUser(zoom.GetUserOpts{EmailOrID: email})
 	if err != nil {
 		log.Fatalf("got error listing users: %+v\n", err)
 	}

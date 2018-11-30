@@ -1,6 +1,7 @@
 package zoom
 
 import (
+	"bytes"
 	"encoding/json"
 	"io/ioutil"
 	"log"
@@ -10,11 +11,12 @@ import (
 	"time"
 
 	"github.com/google/go-querystring/query"
+	"gopkg.in/dgrijalva/jwt-go.v3"
 )
 
 const (
 	apiURI     = "api.zoom.us"
-	apiVersion = "/v1"
+	apiVersion = "/v2"
 )
 
 var (
@@ -59,6 +61,112 @@ func NewClient(apiKey string, apiSecret string) *Client {
 		Secret:   apiSecret,
 		endpoint: uri.String(),
 	}
+}
+
+func normalizeParams(parameters interface{}) interface{} {
+	if parameters == nil {
+		return nil
+	}
+
+	switch reflect.TypeOf(parameters).Kind() {
+	case reflect.Slice:
+		s := reflect.ValueOf(parameters)
+		if s.Len() == 0 {
+			return nil
+		}
+
+		return s.Index(0).Interface()
+	}
+
+	return parameters
+}
+
+func requestV2(c *Client, method Method, path string, urlParameters interface{}, dataParameters interface{}, ret interface{}) error {
+	var buf bytes.Buffer
+
+	// set client to default if not provided
+	if c == nil {
+		if defaultClient == nil {
+			defaultClient = NewClient(APIKey, APISecret)
+		}
+
+		c = defaultClient
+	}
+
+	// allow variadic parameters
+	urlParams := normalizeParams(urlParameters)
+	dataParams := normalizeParams(dataParameters)
+
+	// establish JWT token
+	claims := &jwt.StandardClaims{
+		Issuer:    c.Key,
+		ExpiresAt: jwt.TimeFunc().Local().Add(time.Second * time.Duration(5000)).Unix(),
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	token.Header["alg"] = "HS256"
+	token.Header["typ"] = "JWT"
+	ss, err := token.SignedString([]byte(c.Secret))
+	if err != nil {
+		return err
+	}
+
+	// set URL parameters
+	values, err := query.Values(urlParams)
+	if err != nil {
+		return err
+	}
+
+	// set request URL
+	requestURL := c.endpoint + path + "?"
+	requestURL += values.Encode()
+
+	if Debug {
+		log.Printf("Request URL: %s", requestURL)
+		log.Printf("URL Parameters: %s", values.Encode())
+	}
+
+	// create HTTP client and set timeout
+	client := &http.Client{Transport: c.Transport}
+	if c.Timeout > 0 {
+		client.Timeout = c.Timeout
+	}
+
+	// encode body parameters if any
+	if err := json.NewEncoder(&buf).Encode(&dataParams); err != nil {
+		return err
+	}
+
+	// create HTTP request
+	req, err := http.NewRequest(string(method), requestURL, &buf)
+	if err != nil {
+		return err
+	}
+
+	// set JWT Authorization header
+	req.Header.Add("Authorization", "Bearer "+ss)
+
+	// execute HTTP request
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	// get HTTP response
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
+
+	if Debug {
+		log.Printf("Response Body: %s", string(body))
+	}
+
+	if err := checkError(body); err != nil {
+		return err
+	}
+
+	return json.Unmarshal(body, &ret)
 }
 
 func request(c *Client, path string, parameters interface{}, ret interface{}) error {
