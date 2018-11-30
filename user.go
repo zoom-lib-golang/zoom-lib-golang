@@ -31,12 +31,17 @@ func ListUsers(opts ...ListUsersOptions) (ListUsersResponse, error) {
 // ListUsers calls /user/list, listing all users, using client c
 func (c *Client) ListUsers(opts ...ListUsersOptions) (ListUsersResponse, error) {
 	var ret = ListUsersResponse{}
-	return ret, requestV2(c, Get, listUsersPath, opts, nil, &ret)
+	return ret, c.requestV2(requestV2Opts{
+		Method:        Get,
+		Path:          listUsersPath,
+		URLParameters: opts,
+		Ret:           &ret,
+	})
 }
 
 // GetUserOpts contains options for GetUser
 type GetUserOpts struct {
-	EmailOrID string
+	EmailOrID string         `url:"userId"`
 	LoginType *UserLoginType `url:"login_type,omitempty"` // use pointer so it can be null
 }
 
@@ -48,5 +53,10 @@ func GetUser(opts GetUserOpts) (User, error) {
 // GetUser calls /users/{userId}, searching for a user by ID or email, using a specific client
 func (c *Client) GetUser(opts GetUserOpts) (User, error) {
 	var ret = User{}
-	return ret, requestV2(c, Get, fmt.Sprintf(getUserPath, opts.EmailOrID), opts, nil, &ret)
+	return ret, c.requestV2(requestV2Opts{
+		Method:        Get,
+		Path:          fmt.Sprintf(getUserPath, opts.EmailOrID),
+		URLParameters: opts,
+		Ret:           &ret,
+	})
 }
