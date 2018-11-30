@@ -3,9 +3,8 @@ package zoom // Use this file for /user endpoints
 import "fmt"
 
 const (
-	listUsersPath      = "/users"
-	getUserPath        = "/users/%s"
-	getUserByEmailPath = "/user/getbyemail"
+	listUsersPath = "/users"
+	getUserPath   = "/users/%s"
 )
 
 // ListUsersResponse contains the response from a call to ListUsers
