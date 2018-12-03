@@ -47,10 +47,7 @@ func ExampleWebinar() {
 
 	log.Printf("Got registration webinars: %+v\n", webinars)
 
-	webinar, err := zoom.GetWebinarInfo(zoom.GetWebinarInfoOptions{
-		HostID: user.ID,
-		ID:     webinars.Webinars[0].ID,
-	})
+	webinar, err := zoom.GetWebinarInfo(webinars.Webinars[0].ID)
 
 	if err != nil {
 		log.Fatalf("got error getting single webinar: %+v\n", err)

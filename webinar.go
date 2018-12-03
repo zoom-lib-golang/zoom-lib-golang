@@ -6,8 +6,8 @@ const (
 	// ListWebinarsPath - v2 lists all webinars
 	ListWebinarsPath = "/users/%s/webinars"
 
-	// GetWebinarInfoPath - v1 path for retrieving info on a single webinar
-	GetWebinarInfoPath = "/webinar/get"
+	// GetWebinarInfoPath - v2 path for retrieving info on a single webinar
+	GetWebinarInfoPath = "/webinars/%d"
 
 	// RegisterForWebinarPath - v1 path for registering a user for a webinar
 	RegisterForWebinarPath = "/webinar/register"
@@ -56,22 +56,19 @@ func (c *Client) ListWebinars(opts ListWebinarsOptions) (ListWebinarsResponse, e
 	})
 }
 
-// GetWebinarInfoOptions contains options for GetWebinarInfo
-type GetWebinarInfoOptions struct {
-	ID     int    `url:"id"`
-	HostID string `url:"host_id"`
+// GetWebinarInfo gets into about a single webinar, using the default client
+func GetWebinarInfo(webinarID int) (Webinar, error) {
+	return defaultClient.GetWebinarInfo(webinarID)
 }
 
-// GetWebinarInfo calls /webinar/get, listing a single webinar, using the
-// default client
-func GetWebinarInfo(opts ...GetWebinarInfoOptions) (Webinar, error) {
-	return defaultClient.GetWebinarInfo(opts...)
-}
-
-// GetWebinarInfo calls /webinar/get, listing a single webinar, using client c
-func (c *Client) GetWebinarInfo(opts ...GetWebinarInfoOptions) (Webinar, error) {
+// GetWebinarInfo gets into about a single webinar, using client c
+func (c *Client) GetWebinarInfo(webinarID int) (Webinar, error) {
 	var ret = Webinar{}
-	return ret, request(c, GetWebinarInfoPath, opts, &ret)
+	return ret, c.requestV2(requestV2Opts{
+		Method: Get,
+		Path:   fmt.Sprintf(GetWebinarInfoPath, webinarID),
+		Ret:    &ret,
+	})
 }
 
 // CustomQuestion is the type for custom questions on registration form
