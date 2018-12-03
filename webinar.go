@@ -1,11 +1,10 @@
 package zoom // Use this file for /webinar endpoints
 
-const (
-	// ListWebinarsPath - v1 path to list webinars not requiring registration
-	ListWebinarsPath = "/webinar/list"
+import "fmt"
 
-	// ListRegistrationWebinarsPath - v1 path to list webinars requiring registration
-	ListRegistrationWebinarsPath = "/webinar/list/registration"
+const (
+	// ListWebinarsPath - v2 lists all webinars
+	ListWebinarsPath = "/users/%s/webinars"
 
 	// GetWebinarInfoPath - v1 path for retrieving info on a single webinar
 	GetWebinarInfoPath = "/webinar/get"
@@ -32,37 +31,29 @@ type ListWebinarsResponse struct {
 	Webinars     []Webinar `json:"webinars"`
 }
 
-// ListWebinarsOptions contains options for ListWebinars
+// ListWebinarsOptions contains options for ListWebinars. Also accepts email address for HostID
 type ListWebinarsOptions struct {
-	HostID     string `url:"host_id"`
+	HostID     string `url:"-"`
 	PageSize   *int   `url:"page_size,omitempty"`
 	PageNumber *int   `url:"page_number,omitempty"`
 }
 
 // ListWebinars calls /webinar/list, listing all webinars that don't require
 // registration, using the default client
-func ListWebinars(opts ...ListWebinarsOptions) (ListWebinarsResponse, error) {
-	return defaultClient.ListWebinars(opts...)
+func ListWebinars(opts ListWebinarsOptions) (ListWebinarsResponse, error) {
+	return defaultClient.ListWebinars(opts)
 }
 
 // ListWebinars calls /webinar/list, listing all webinars that don't require
 // registration, using the client c
-func (c *Client) ListWebinars(opts ...ListWebinarsOptions) (ListWebinarsResponse, error) {
+func (c *Client) ListWebinars(opts ListWebinarsOptions) (ListWebinarsResponse, error) {
 	var ret = ListWebinarsResponse{}
-	return ret, request(c, ListWebinarsPath, opts, &ret)
-}
-
-// ListRegistrationWebinars calls /webinar/list, listing all webinars that don't require
-// registration, using the default client
-func ListRegistrationWebinars(opts ...ListWebinarsOptions) (ListWebinarsResponse, error) {
-	return defaultClient.ListRegistrationWebinars(opts...)
-}
-
-// ListRegistrationWebinars calls /webinar/list, listing all webinars that don't require
-// registration, using the client c
-func (c *Client) ListRegistrationWebinars(opts ...ListWebinarsOptions) (ListWebinarsResponse, error) {
-	var ret = ListWebinarsResponse{}
-	return ret, request(c, ListRegistrationWebinarsPath, opts, &ret)
+	return ret, c.requestV2(requestV2Opts{
+		Method:        Get,
+		Path:          fmt.Sprintf(ListWebinarsPath, opts.HostID),
+		URLParameters: &opts,
+		Ret:           &ret,
+	})
 }
 
 // GetWebinarInfoOptions contains options for GetWebinarInfo

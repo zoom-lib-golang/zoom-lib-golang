@@ -17,7 +17,7 @@ func ExampleUser() {
 	zoom.APISecret = apiSecret
 	zoom.Debug = true
 
-	users, err := zoom.ListUsers()
+	users, err := zoom.ListUsers(zoom.ListUsersOptions{})
 	if err != nil {
 		log.Fatalf("got error listing users: %+v\n", err)
 	}

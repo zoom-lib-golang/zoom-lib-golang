@@ -37,7 +37,7 @@ func ExampleWebinar() {
 
 	log.Printf("Got open webinars: %+v\n", webinars)
 
-	webinars, err = zoom.ListRegistrationWebinars(zoom.ListWebinarsOptions{
+	webinars, err = zoom.ListWebinars(zoom.ListWebinarsOptions{
 		HostID:   user.ID,
 		PageSize: &fifty,
 	})

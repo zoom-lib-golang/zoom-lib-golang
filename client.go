@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"reflect"
 	"time"
 
 	"github.com/google/go-querystring/query"
@@ -57,29 +56,11 @@ func NewClient(apiKey string, apiSecret string) *Client {
 	}
 }
 
-func normalizeParams(parameters interface{}) interface{} {
-	if parameters == nil {
-		return nil
-	}
-
-	switch reflect.TypeOf(parameters).Kind() {
-	case reflect.Slice:
-		s := reflect.ValueOf(parameters)
-		if s.Len() == 0 {
-			return nil
-		}
-
-		return s.Index(0).Interface()
-	}
-
-	return parameters
-}
-
 type requestV2Opts struct {
 	Client         *Client
 	Method         HTTPMethod
-	Path           string
 	URLParameters  interface{}
+	Path           string
 	DataParameters interface{}
 	Ret            interface{}
 }
@@ -117,6 +98,10 @@ func (c *Client) addRequestAuth(req *http.Request, err error) (*http.Request, er
 		return nil, err
 	}
 
+	if Debug {
+		log.Println("JWT Token: " + ss)
+	}
+
 	// set JWT Authorization header
 	req.Header.Add("Authorization", "Bearer "+ss)
 
@@ -126,22 +111,22 @@ func (c *Client) addRequestAuth(req *http.Request, err error) (*http.Request, er
 func (c *Client) httpRequest(opts requestV2Opts) (*http.Request, error) {
 	var buf bytes.Buffer
 
-	// allow variadic parameters
-	dataParams := normalizeParams(opts.DataParameters)
-
 	// encode body parameters if any
-	if err := json.NewEncoder(&buf).Encode(&dataParams); err != nil {
+	if err := json.NewEncoder(&buf).Encode(&opts.DataParameters); err != nil {
 		return nil, err
 	}
 
 	// set URL parameters
-	values, err := query.Values(normalizeParams(opts.URLParameters))
+	values, err := query.Values(opts.URLParameters)
 	if err != nil {
 		return nil, err
 	}
 
 	// set request URL
-	requestURL := c.endpoint + opts.Path + "?" + values.Encode()
+	requestURL := c.endpoint + opts.Path
+	if len(values) > 0 {
+		requestURL += "?" + values.Encode()
+	}
 
 	if Debug {
 		log.Printf("Request URL: %s", requestURL)

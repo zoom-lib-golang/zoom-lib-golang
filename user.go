@@ -3,8 +3,11 @@ package zoom // Use this file for /user endpoints
 import "fmt"
 
 const (
-	listUsersPath = "/users"
-	getUserPath   = "/users/%s"
+	// ListUsersPath - v2 path for listing users
+	ListUsersPath = "/users"
+
+	// GetUserPath - v2 path for getting a specific user
+	GetUserPath = "/users/%s"
 )
 
 // ListUsersResponse contains the response from a call to ListUsers
@@ -24,16 +27,16 @@ type ListUsersOptions struct {
 }
 
 // ListUsers calls /user/list, listing all users, using the default client
-func ListUsers(opts ...ListUsersOptions) (ListUsersResponse, error) {
-	return defaultClient.ListUsers(opts...)
+func ListUsers(opts ListUsersOptions) (ListUsersResponse, error) {
+	return defaultClient.ListUsers(opts)
 }
 
 // ListUsers calls /user/list, listing all users, using client c
-func (c *Client) ListUsers(opts ...ListUsersOptions) (ListUsersResponse, error) {
+func (c *Client) ListUsers(opts ListUsersOptions) (ListUsersResponse, error) {
 	var ret = ListUsersResponse{}
 	return ret, c.requestV2(requestV2Opts{
 		Method:        Get,
-		Path:          listUsersPath,
+		Path:          ListUsersPath,
 		URLParameters: opts,
 		Ret:           &ret,
 	})
@@ -41,7 +44,7 @@ func (c *Client) ListUsers(opts ...ListUsersOptions) (ListUsersResponse, error) 
 
 // GetUserOpts contains options for GetUser
 type GetUserOpts struct {
-	EmailOrID string         `url:"userId"`
+	EmailOrID string         `url:"-"`
 	LoginType *UserLoginType `url:"login_type,omitempty"` // use pointer so it can be null
 }
 
@@ -55,7 +58,7 @@ func (c *Client) GetUser(opts GetUserOpts) (User, error) {
 	var ret = User{}
 	return ret, c.requestV2(requestV2Opts{
 		Method:        Get,
-		Path:          fmt.Sprintf(getUserPath, opts.EmailOrID),
+		Path:          fmt.Sprintf(GetUserPath, opts.EmailOrID),
 		URLParameters: opts,
 		Ret:           &ret,
 	})

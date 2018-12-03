@@ -20,6 +20,8 @@ As with any major API update, there are some breaking changes:
   now has a signature more similar to GetUserByEmail
 * User Login Type (`UserLoginType`) names have been upated to match Zoom
   documentation
+* `ListRegistrationWebinars` has been combined with `ListWebinars`,
+  which now gets everything
 
 ### Convert Endpoints
 
@@ -29,9 +31,9 @@ As with any major API update, there are some breaking changes:
 - [ ] `GetWebinarPanelist`
 - [ ] `GetWebinarRegistrationInfo`
 - [ ] `ListRegistrants`
-- [ ] `ListRegistrationWebinars`
+- [x] `ListRegistrationWebinars` *(deprecated)*
 - [x] `ListUsers`
-- [ ] `ListWebinars`
+- [x] `ListWebinars`
 - [ ] `RegisterForWebinar`
 
 ## About
