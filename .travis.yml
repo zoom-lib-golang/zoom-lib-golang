@@ -4,7 +4,7 @@ go:
   - 1.9.x
 script:
   - ./fmtpolice
-  - go test -v ./...
+  - go test -tags integration -v ./...
 notifications:
   email:
     recipients:

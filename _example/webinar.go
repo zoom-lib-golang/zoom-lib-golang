@@ -1,7 +1,6 @@
-package zoom_test
+package main
 
 import (
-	"encoding/json"
 	"log"
 	"os"
 
@@ -9,7 +8,7 @@ import (
 )
 
 // ExampleWebinar contains examples for the /webinar endpoints
-func ExampleWebinar() {
+func main() {
 	var (
 		apiKey          = os.Getenv("ZOOM_API_KEY")
 		apiSecret       = os.Getenv("ZOOM_API_SECRET")
@@ -21,9 +20,7 @@ func ExampleWebinar() {
 	zoom.APISecret = apiSecret
 	zoom.Debug = true
 
-	user, err := zoom.GetUserByEmail(zoom.GetUserByEmailOptions{
-		Email: email,
-	})
+	user, err := zoom.GetUser(zoom.GetUserOpts{EmailOrID: email})
 	if err != nil {
 		log.Fatalf("got error listing users: %+v\n", err)
 	}
@@ -39,7 +36,7 @@ func ExampleWebinar() {
 
 	log.Printf("Got open webinars: %+v\n", webinars)
 
-	webinars, err = zoom.ListRegistrationWebinars(zoom.ListWebinarsOptions{
+	webinars, err = zoom.ListWebinars(zoom.ListWebinarsOptions{
 		HostID:   user.ID,
 		PageSize: &fifty,
 	})
@@ -49,10 +46,7 @@ func ExampleWebinar() {
 
 	log.Printf("Got registration webinars: %+v\n", webinars)
 
-	webinar, err := zoom.GetWebinarInfo(zoom.GetWebinarInfoOptions{
-		HostID: user.ID,
-		ID:     webinars.Webinars[0].ID,
-	})
+	webinar, err := zoom.GetWebinarInfo(webinars.Webinars[0].ID)
 
 	if err != nil {
 		log.Fatalf("got error getting single webinar: %+v\n", err)
@@ -70,17 +64,12 @@ func ExampleWebinar() {
 		},
 	}
 
-	b, err := json.Marshal(customQs)
-	if err != nil {
-		log.Fatalf("error marshaling custom Qs to JSON: %s\n", err)
-	}
-
-	registrantInfo := zoom.RegisterForWebinarOptions{
-		ID:              webinar.ID,
+	registrantInfo := zoom.WebinarRegistrant{
+		WebinarID:       webinar.ID,
 		Email:           registrantEmail,
 		FirstName:       "Foo",
 		LastName:        "Bar",
-		CustomQuestions: string(b),
+		CustomQuestions: customQs,
 	}
 
 	registrant, err := zoom.RegisterForWebinar(registrantInfo)
@@ -90,15 +79,21 @@ func ExampleWebinar() {
 
 	log.Printf("Got registrant: %+v\n", registrant)
 
-	getRegistrationOpts := zoom.GetWebinarRegistrationInfoOptions{
+	getRegistrationOpts := zoom.ListWebinarRegistrantsOptions{
 		WebinarID: webinar.ID,
-		HostID:    user.ID,
 	}
 
-	registrationInfo, err := zoom.GetWebinarRegistrationInfo(getRegistrationOpts)
+	registrationInfo, err := zoom.ListWebinarRegistrants(getRegistrationOpts)
 	if err != nil {
 		log.Fatalf("got error getting registration info for webinar %d: %+v\n", webinar.ID, err)
 	}
 
 	log.Printf("Got registration information: %+v\n", registrationInfo)
+
+	panelists, err := zoom.GetWebinarPanelists(webinar.ID)
+	if err != nil {
+		log.Fatalf("got error listing webinar panelists for webinar %d: %+v\n", webinar.ID, err)
+	}
+
+	log.Printf("Got webinar panelists: %+v\n", panelists)
 }

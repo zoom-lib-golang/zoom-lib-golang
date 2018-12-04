@@ -86,14 +86,17 @@ const (
 	MoreThanTenThousand NumberOfEmployeesType = "More than 10,000"
 )
 
-// ListRegistrantsTypeType contains possible options for "type" field when
+// ListWebinarRegistrantsStatusType contains possible options for "status" field when
 // listing registrants
-type ListRegistrantsTypeType int
+type ListWebinarRegistrantsStatusType string
 
 const (
 	// PendingApprovalType - registrants pending approval
-	PendingApprovalType ListRegistrantsTypeType = 0
+	PendingApprovalType ListWebinarRegistrantsStatusType = "pending"
 
 	// ApprovedType - approved registrants
-	ApprovedType ListRegistrantsTypeType = 1
+	ApprovedType ListWebinarRegistrantsStatusType = "approved"
+
+	// DeniedType - denied registrants
+	DeniedType ListWebinarRegistrantsStatusType = "denied"
 )

@@ -6,13 +6,17 @@ import (
 )
 
 type errorContainer struct {
-	*APIError `json:"error"`
+	*APIError
 }
 
 // APIError contains the code and message returned by any Zoom errors
 type APIError struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
+	Errors  []struct {
+		Field   string `json:"field"`
+		Message string `json:"message"`
+	} `json:"errors,omitempty"`
 }
 
 func (e *APIError) Error() string {

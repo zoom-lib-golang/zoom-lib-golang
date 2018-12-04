@@ -1,0 +1,23 @@
+---
+version: 2
+plugins:
+  golint:
+    enabled: true
+    checks:
+      GoLint/Naming/MixedCaps:
+        enabled: false
+  govet:
+    enabled: true
+  gofmt:
+    enabled: true
+  fixme:
+    enabled: true
+  duplication:
+    enabled: true
+    config:
+      count_threshold: 3
+exclude_patterns:
+  - "**/*_test.go"
+  - "*_test.go"
+  - "vendor/"
+  - "_example/webinar.go"
