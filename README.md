@@ -10,6 +10,9 @@ Go (Golang) client library for the [Zoom.us REST API Version
 [here](https://gopkg.in/himalayan-institute/zoom-lib-golang.v1) for
 Version 1 support.
 
+For example use, see the Godoc documentation or the [examples
+directory](_example/)
+
 ## v2 TODO
 
 ### Compatibility Notes

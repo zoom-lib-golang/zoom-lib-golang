@@ -1,7 +1,6 @@
-package zoom_test
+package main
 
 import (
-	"encoding/json"
 	"log"
 	"os"
 
@@ -9,7 +8,7 @@ import (
 )
 
 // ExampleWebinar contains examples for the /webinar endpoints
-func ExampleWebinar() {
+func main() {
 	var (
 		apiKey          = os.Getenv("ZOOM_API_KEY")
 		apiSecret       = os.Getenv("ZOOM_API_SECRET")
@@ -65,17 +64,12 @@ func ExampleWebinar() {
 		},
 	}
 
-	b, err := json.Marshal(customQs)
-	if err != nil {
-		log.Fatalf("error marshaling custom Qs to JSON: %s\n", err)
-	}
-
 	registrantInfo := zoom.RegisterForWebinarOptions{
 		ID:              webinar.ID,
 		Email:           registrantEmail,
 		FirstName:       "Foo",
 		LastName:        "Bar",
-		CustomQuestions: string(b),
+		CustomQuestions: customQs,
 	}
 
 	registrant, err := zoom.RegisterForWebinar(registrantInfo)
