@@ -3,7 +3,6 @@ package zoom
 import (
 	"bytes"
 	"encoding/json"
-	"errors"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -156,8 +155,4 @@ func (c *Client) requestV2(opts requestV2Opts) error {
 
 	// unmarshal the response body into the return object
 	return json.Unmarshal(body, &opts.Ret)
-}
-
-func request(c *Client, path string, parameters interface{}, ret interface{}) error {
-	return errors.New("this method is DEPRECATED! Use requestV2. This method will be removed when v2 implementation is complete")
 }
