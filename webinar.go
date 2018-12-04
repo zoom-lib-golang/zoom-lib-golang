@@ -8,10 +8,38 @@ const (
 
 	// GetWebinarInfoPath - v2 path for retrieving info on a single webinar
 	GetWebinarInfoPath = "/webinars/%d"
-
-	// GetWebinarPanelistsPath - v1 path for listing panelists for a webinar
-	GetWebinarPanelistsPath = "/webinar/panelists"
 )
+
+// Webinar represents a webinar object
+type Webinar struct {
+	UUID                      string              `json:"uuid"`
+	ID                        int                 `json:"id"`
+	StartURL                  string              `json:"start_url"`
+	JoinURL                   string              `json:"join_url"`
+	RegistrationURL           string              `json:"registration_url"`
+	CreatedAt                 *Time               `json:"created_at"`
+	HostID                    string              `json:"host_id"`
+	Topic                     string              `json:"topic"`
+	Type                      WebinarType         `json:"type"`
+	StartTime                 *Time               `json:"start_time"`
+	Duration                  int                 `json:"duration"`
+	Timezone                  string              `json:"timezone"`
+	Agenda                    string              `json:"agenda"`
+	OptionStartType           string              `json:"option_start_type"`
+	OptionAudio               string              `json:"option_audio"`
+	OptionEnforceLogin        bool                `json:"option_enforce_login"`
+	OptionEnforceLoginDomains string              `json:"option_enforce_login_domains"`
+	OptionAlternativeHosts    string              `json:"option_alternative_hosts"`
+	Status                    int                 `json:"status"`
+	Occurrences               []WebinarOccurrence `json:"occurrences"`
+}
+
+// WebinarOccurrence contains recurrence data for recurring webinars
+type WebinarOccurrence struct {
+	OccurrenceID string `json:"occurrence_id"`
+	StartTime    *Time  `json:"start_time"`
+	Duration     int    `json:"duration"`
+}
 
 // ListWebinarsResponse contains the response from a call to ListWebinars
 type ListWebinarsResponse struct {
@@ -60,27 +88,4 @@ func (c *Client) GetWebinarInfo(webinarID int) (Webinar, error) {
 		Path:   fmt.Sprintf(GetWebinarInfoPath, webinarID),
 		Ret:    &ret,
 	})
-}
-
-// GetWebinarPanelistsOptions - options for retrieving webinar panelist info
-type GetWebinarPanelistsOptions struct {
-	WebinarID int    `url:"id"`
-	HostID    string `url:"host_id"`
-}
-
-// GetWebinarPanelistsResponse - response from call to /webinar/panelists
-type GetWebinarPanelistsResponse struct {
-	TotalRecords int               `json:"total_records"`
-	Panelists    []WebinarPanelist `json:"panelists"`
-}
-
-// GetWebinarPanelists calls /webinar/panelists using the default client
-func GetWebinarPanelists(opts ...GetWebinarPanelistsOptions) (GetWebinarPanelistsResponse, error) {
-	return defaultClient.GetWebinarPanelists(opts...)
-}
-
-// GetWebinarPanelists calls /webinar/panelists using client c
-func (c *Client) GetWebinarPanelists(opts ...GetWebinarPanelistsOptions) (GetWebinarPanelistsResponse, error) {
-	var ret = GetWebinarPanelistsResponse{}
-	return ret, request(c, GetWebinarPanelistsPath, opts, &ret)
 }

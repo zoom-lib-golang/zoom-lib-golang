@@ -89,4 +89,11 @@ func main() {
 	}
 
 	log.Printf("Got registration information: %+v\n", registrationInfo)
+
+	panelists, err := zoom.GetWebinarPanelists(webinar.ID)
+	if err != nil {
+		log.Fatalf("got error listing webinar panelists for webinar %d: %+v\n", webinar.ID, err)
+	}
+
+	log.Printf("Got webinar panelists: %+v\n", panelists)
 }

@@ -33,13 +33,13 @@ As with any major API update, there are some breaking changes:
 - [x] `GetUser`
 - [x] `GetUserByEmail` *(deprecated)*
 - [x] `GetWebinarInfo`
-- [ ] `GetWebinarPanelist`
+- [x] `GetWebinarPanelist`
 - [x] `GetWebinarRegistrationInfo` *(deprecated)*
 - [x] `ListRegistrants`
 - [x] `ListRegistrationWebinars` *(deprecated)*
 - [x] `ListUsers`
 - [x] `ListWebinars`
-- [ ] `RegisterForWebinar`
+- [x] `RegisterForWebinar`
 
 ## About
 
