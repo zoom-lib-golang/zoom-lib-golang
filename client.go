@@ -84,28 +84,9 @@ func (c *Client) executeRequest(opts requestV2Opts) (*http.Response, error) {
 		return nil, err
 	}
 
+	req.Header.Add("Content-Type", "application/json")
+
 	return client.Do(req)
-}
-
-func (c *Client) addRequestAuth(req *http.Request, err error) (*http.Request, error) {
-	if err != nil {
-		return nil, err
-	}
-
-	// establish JWT token
-	ss, err := jwtToken(c.Key, c.Secret)
-	if err != nil {
-		return nil, err
-	}
-
-	if Debug {
-		log.Println("JWT Token: " + ss)
-	}
-
-	// set JWT Authorization header
-	req.Header.Add("Authorization", "Bearer "+ss)
-
-	return req, nil
 }
 
 func (c *Client) httpRequest(opts requestV2Opts) (*http.Request, error) {
@@ -131,15 +112,11 @@ func (c *Client) httpRequest(opts requestV2Opts) (*http.Request, error) {
 	if Debug {
 		log.Printf("Request URL: %s", requestURL)
 		log.Printf("URL Parameters: %s", values.Encode())
+		log.Printf("Body Parameters: %s", buf.String())
 	}
 
 	// create HTTP request
-	req, err := http.NewRequest(string(opts.Method), requestURL, &buf)
-	if err != nil {
-		return nil, err
-	}
-
-	return req, nil
+	return http.NewRequest(string(opts.Method), requestURL, &buf)
 }
 
 func (c *Client) httpClient() *http.Client {

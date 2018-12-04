@@ -31,19 +31,6 @@ type WebinarOccurrence struct {
 	Duration     int    `json:"duration"`
 }
 
-// WebinarRegistrant is returned when retrieving information about webinar
-// attendees from calls to /webinar/registration
-type WebinarRegistrant struct {
-	ID               string `json:"id"`
-	FirstName        string `json:"first_name"`
-	LastName         string `json:"last_name"`
-	CreateTime       *Time  `json:"create_time"`
-	Approval         string `json:"approval"`
-	Email            string `json:"email"`
-	RegistrationURL  *URL   `json:"registration_url"`
-	RegistrationTime *Time  `json:"registration_time"`
-}
-
 // WebinarPanelist contains information returned by /webinar/panelists
 type WebinarPanelist struct {
 	Name    string `json:"name"`

@@ -25,6 +25,8 @@ As with any major API update, there are some breaking changes:
   documentation
 * `ListRegistrationWebinars` has been combined with `ListWebinars`,
   which now gets everything
+* `GetWebinarRegistrationInfo` has been deprecated and merged with
+  `ListRegistrants`, which has been changed to `ListWebinarRegistrants`
 
 ### Convert Endpoints
 
@@ -32,8 +34,8 @@ As with any major API update, there are some breaking changes:
 - [x] `GetUserByEmail` *(deprecated)*
 - [x] `GetWebinarInfo`
 - [ ] `GetWebinarPanelist`
-- [ ] `GetWebinarRegistrationInfo`
-- [ ] `ListRegistrants`
+- [x] `GetWebinarRegistrationInfo` *(deprecated)*
+- [x] `ListRegistrants`
 - [x] `ListRegistrationWebinars` *(deprecated)*
 - [x] `ListUsers`
 - [x] `ListWebinars`

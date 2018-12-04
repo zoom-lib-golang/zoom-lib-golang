@@ -64,8 +64,8 @@ func main() {
 		},
 	}
 
-	registrantInfo := zoom.RegisterForWebinarOptions{
-		ID:              webinar.ID,
+	registrantInfo := zoom.WebinarRegistrant{
+		WebinarID:       webinar.ID,
 		Email:           registrantEmail,
 		FirstName:       "Foo",
 		LastName:        "Bar",
@@ -79,12 +79,11 @@ func main() {
 
 	log.Printf("Got registrant: %+v\n", registrant)
 
-	getRegistrationOpts := zoom.GetWebinarRegistrationInfoOptions{
+	getRegistrationOpts := zoom.ListWebinarRegistrantsOptions{
 		WebinarID: webinar.ID,
-		HostID:    user.ID,
 	}
 
-	registrationInfo, err := zoom.GetWebinarRegistrationInfo(getRegistrationOpts)
+	registrationInfo, err := zoom.ListWebinarRegistrants(getRegistrationOpts)
 	if err != nil {
 		log.Fatalf("got error getting registration info for webinar %d: %+v\n", webinar.ID, err)
 	}
