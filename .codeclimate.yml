@@ -1,5 +1,6 @@
 ---
-engines:
+version: 2
+plugins:
   golint:
     enabled: true
     checks:
@@ -11,10 +12,12 @@ engines:
     enabled: true
   fixme:
     enabled: true
-ratings:
-  paths:
-    - "**.go"
-exclude_paths:
+  duplication:
+    enabled: true
+    config:
+      count_threshold: 3
+exclude_patterns:
   - "**/*_test.go"
   - "*_test.go"
   - "vendor/"
+  - "_example/webinar.go"
