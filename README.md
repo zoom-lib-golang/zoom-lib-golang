@@ -10,41 +10,36 @@ Go (Golang) client library for the [Zoom.us REST API Version
 [here](https://gopkg.in/himalayan-institute/zoom-lib-golang.v1) for
 Version 1 support.
 
-For example use, see the Godoc documentation or the [examples
-directory](_example/)
-
-## v2 TODO
-
-### Compatibility Notes
-
-As with any major API update, there are some breaking changes:
-
-* `GetUser` and `GetUserByEmail` have been combined into GetUser, which
-  now has a signature more similar to GetUserByEmail
-* User Login Type (`UserLoginType`) names have been upated to match Zoom
-  documentation
-* `ListRegistrationWebinars` has been combined with `ListWebinars`,
-  which now gets everything
-* `GetWebinarRegistrationInfo` has been deprecated and merged with
-  `ListRegistrants`, which has been changed to `ListWebinarRegistrants`
-
-### Convert Endpoints
-
-- [x] `GetUser`
-- [x] `GetUserByEmail` *(deprecated)*
-- [x] `GetWebinarInfo`
-- [x] `GetWebinarPanelist`
-- [x] `GetWebinarRegistrationInfo` *(deprecated)*
-- [x] `ListRegistrants`
-- [x] `ListRegistrationWebinars` *(deprecated)*
-- [x] `ListUsers`
-- [x] `ListWebinars`
-- [x] `RegisterForWebinar`
-
 ## About
 
 Built out of necessity, this repo will only support select endpoints at
 first. Hopefully, it will eventually support all Zoom API endpoints.
+
+### Examples
+
+For example use, see the Godoc documentation or the [examples
+directory](_example/)
+
+### Tests
+
+To run unit tests and the linter:
+
+```bash
+./fmtpolice
+go test -v ./...
+```
+
+To run the integration tests:
+
+```bash
+# first, define the required environment variables
+export ZOOM_API_KEY="<key>"
+export ZOOM_API_SECRET="<secret>"
+export ZOOM_EXAMPLE_EMAIL="<account email>"
+
+# then run the tests with the integration build tag
+go test -tags integration -v ./...
+```
 
 ## Known Issues
 
