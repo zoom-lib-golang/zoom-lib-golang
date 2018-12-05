@@ -1,7 +1,5 @@
 package zoom
 
-import "fmt"
-
 const (
 	// GetWebinarPanelistsPath - v2 path for listing panelists for a webinar
 	GetWebinarPanelistsPath = "/webinars/%d/panelists"
@@ -30,8 +28,9 @@ func GetWebinarPanelists(webinarID int) (GetWebinarPanelistsResponse, error) {
 func (c *Client) GetWebinarPanelists(webinarID int) (GetWebinarPanelistsResponse, error) {
 	var ret = GetWebinarPanelistsResponse{}
 	return ret, c.requestV2(requestV2Opts{
-		Method: Get,
-		Path:   fmt.Sprintf(GetWebinarPanelistsPath, webinarID),
-		Ret:    &ret,
+		Method:         Get,
+		Path:           GetWebinarPanelistsPath,
+		PathParameters: []interface{}{webinarID},
+		Ret:            &ret,
 	})
 }

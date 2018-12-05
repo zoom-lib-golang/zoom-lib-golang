@@ -1,7 +1,5 @@
 package zoom // Use this file for /user endpoints
 
-import "fmt"
-
 const (
 	// ListUsersPath - v2 path for listing users
 	ListUsersPath = "/users"
@@ -57,9 +55,10 @@ func GetUser(opts GetUserOpts) (User, error) {
 func (c *Client) GetUser(opts GetUserOpts) (User, error) {
 	var ret = User{}
 	return ret, c.requestV2(requestV2Opts{
-		Method:        Get,
-		Path:          fmt.Sprintf(GetUserPath, opts.EmailOrID),
-		URLParameters: opts,
-		Ret:           &ret,
+		Method:         Get,
+		Path:           GetUserPath,
+		PathParameters: []interface{}{opts.EmailOrID},
+		URLParameters:  opts,
+		Ret:            &ret,
 	})
 }

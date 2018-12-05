@@ -1,7 +1,5 @@
 package zoom // Use this file for /webinar endpoints
 
-import "fmt"
-
 const (
 	// ListWebinarsPath - v2 lists all webinars
 	ListWebinarsPath = "/users/%s/webinars"
@@ -68,10 +66,11 @@ func ListWebinars(opts ListWebinarsOptions) (ListWebinarsResponse, error) {
 func (c *Client) ListWebinars(opts ListWebinarsOptions) (ListWebinarsResponse, error) {
 	var ret = ListWebinarsResponse{}
 	return ret, c.requestV2(requestV2Opts{
-		Method:        Get,
-		Path:          fmt.Sprintf(ListWebinarsPath, opts.HostID),
-		URLParameters: &opts,
-		Ret:           &ret,
+		Method:         Get,
+		Path:           ListWebinarsPath,
+		PathParameters: []interface{}{opts.HostID},
+		URLParameters:  &opts,
+		Ret:            &ret,
 	})
 }
 
@@ -84,8 +83,9 @@ func GetWebinarInfo(webinarID int) (Webinar, error) {
 func (c *Client) GetWebinarInfo(webinarID int) (Webinar, error) {
 	var ret = Webinar{}
 	return ret, c.requestV2(requestV2Opts{
-		Method: Get,
-		Path:   fmt.Sprintf(GetWebinarInfoPath, webinarID),
-		Ret:    &ret,
+		Method:         Get,
+		Path:           GetWebinarInfoPath,
+		PathParameters: []interface{}{webinarID},
+		Ret:            &ret,
 	})
 }

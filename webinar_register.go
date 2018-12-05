@@ -1,7 +1,5 @@
 package zoom
 
-import "fmt"
-
 const (
 	// RegisterForWebinarPath - v2 path for registering a user for a webinar
 	RegisterForWebinarPath = "/webinars/%d/registrants"
@@ -77,7 +75,8 @@ func (c *Client) RegisterForWebinar(opts WebinarRegistrant) (RegisterForWebinarR
 	var ret = RegisterForWebinarResponse{}
 	return ret, c.requestV2(requestV2Opts{
 		Method:         Post,
-		Path:           fmt.Sprintf(RegisterForWebinarPath, opts.WebinarID),
+		Path:           RegisterForWebinarPath,
+		PathParameters: []interface{}{opts.WebinarID},
 		URLParameters:  opts,
 		DataParameters: opts,
 		Ret:            &ret,
@@ -111,9 +110,10 @@ func ListWebinarRegistrants(opts ListWebinarRegistrantsOptions) (ListWebinarRegi
 func (c *Client) ListWebinarRegistrants(opts ListWebinarRegistrantsOptions) (ListWebinarRegistrantsResponse, error) {
 	var ret = ListWebinarRegistrantsResponse{}
 	return ret, c.requestV2(requestV2Opts{
-		Method:        Get,
-		Path:          fmt.Sprintf(RegisterForWebinarPath, opts.WebinarID),
-		URLParameters: opts,
-		Ret:           &ret,
+		Method:         Get,
+		Path:           RegisterForWebinarPath,
+		PathParameters: []interface{}{opts.WebinarID},
+		URLParameters:  opts,
+		Ret:            &ret,
 	})
 }

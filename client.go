@@ -3,6 +3,7 @@ package zoom
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -57,11 +58,12 @@ func NewClient(apiKey string, apiSecret string) *Client {
 
 type requestV2Opts struct {
 	Client         *Client
-	Method         HTTPMethod
-	URLParameters  interface{}
-	Path           string
 	DataParameters interface{}
+	Method         HTTPMethod
+	Path           string
+	PathParameters []interface{}
 	Ret            interface{}
+	URLParameters  interface{}
 }
 
 func initializeDefault(c *Client) *Client {
@@ -104,6 +106,9 @@ func (c *Client) httpRequest(opts requestV2Opts) (*http.Request, error) {
 
 	// set request URL
 	requestURL := c.endpoint + opts.Path
+	if opts.PathParameters != nil && len(opts.PathParameters) > 0 {
+		requestURL = fmt.Sprintf(requestURL, opts.PathParameters...)
+	}
 	if len(values) > 0 {
 		requestURL += "?" + values.Encode()
 	}
