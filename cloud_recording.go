@@ -7,8 +7,8 @@ const (
 	ListAllRecordingsPath = "/users/%s/recordings"
 )
 
-// RecordingsFile represents a recordings file object
-type RecordingsFile struct {
+// RecordingFile represents a recordings file object
+type RecordingFile struct {
 	ID             string `json:"id"`
 	MeetingID      string `json:"meeting_id"`
 	RecordingStart string `json:"recording_start"`
@@ -24,15 +24,19 @@ type RecordingsFile struct {
 
 // Meeting represents a zoom meeting object
 type Meeting struct {
-	UUID            string           `json:"uuid"`
-	ID              int              `json:"id"`
-	AccountID       string           `json:"account_id"`
-	HostID          string           `json:"host_id"`
-	Topic           string           `json:"topic"`
-	StartTime       *Time            `json:"start_time"`
-	TotalSize       int              `json:"total_size"`
-	RecordingCount  int              `json:"recording_count"`
-	RecordingsFiles []RecordingsFile `json:"recordings_files"`
+	UUID           string          `json:"uuid"`
+	ID             int             `json:"id"`
+	AccountID      string          `json:"account_id"`
+	HostID         string          `json:"host_id"`
+	Topic          string          `json:"topic"`
+	StartTime      *Time           `json:"start_time"`
+	Timezome       string          `json:"timezone"`
+	Duration       int             `json:"duration"`
+	TotalSize      int             `json:"total_size"`
+	RecordingCount int             `json:"recording_count"`
+	Type           int             `json:"type"`
+	ShareURL       string          `json:"share_url"`
+	RecordingFiles []RecordingFile `json:"recording_files"`
 }
 
 // ListAllRecordingsResponse contains the response from a call to ListAllRecordings
