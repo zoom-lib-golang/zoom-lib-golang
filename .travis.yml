@@ -4,7 +4,7 @@ go:
   - 1.9.x
 jobs:
   include:
-    - stage: format
+    - stage: format check
       script: ./fmtpolice
     - stage: tests
       script: go test -v ./...
