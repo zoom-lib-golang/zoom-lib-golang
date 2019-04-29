@@ -10,7 +10,7 @@ main() {
 }
 
 __gofiles() {
-  find . -name '*.go' | grep -vE '^vendor/'
+  find . -name '*.go' | grep -vE '^./vendor/|^./Godeps/_workspace/'
 }
 
 check_fmt() {

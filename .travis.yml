@@ -2,9 +2,15 @@
 language: go
 go:
   - 1.9.x
-script:
-  - ./fmtpolice
-  - go test -tags integration -v ./...
+jobs:
+  include:
+    - stage: format check
+      script: ./fmtpolice
+    - stage: tests
+      script: go test -v ./...
+    - stage: integration tests
+      script: go test -tags integration -v ./...
+      if: branch = master
 notifications:
   email:
     recipients:
