@@ -10,7 +10,7 @@ jobs:
       script: go test -v ./...
     - stage: integration tests
       script: go test -tags integration -v ./...
-      if: branch = master
+      if: type != pull_request
 notifications:
   email:
     recipients:
