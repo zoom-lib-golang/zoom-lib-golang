@@ -3,6 +3,7 @@ package zoom
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -139,8 +140,13 @@ func (c *Client) requestV2(opts requestV2Opts) error {
 		return err
 	}
 
-	// If there is no body in response and there were no errors, just return
+	// If there is no body in response
 	if opts.HeadResponse {
+		if resp.StatusCode != 204 {
+			return errors.New(resp.Status)
+		}
+
+		// there were no errors, just return
 		return nil
 	}
 
