@@ -1,27 +1,6 @@
 package zoom
 
-import "fmt"
-
 const (
-	// ListMeetingsPath - v2 lists all the meetings that were scheduled for a user
-	ListMeetingsPath = "/users/%s/meetings"
-
-	// CreateMeetingPath - v2 create a meeting for a user
-	CreateMeetingPath = "/users/%s/meetings"
-
-	// GetMeetingPath - v2 retrieve the details of a meeting
-	GetMeetingPath = "/meetings/%d"
-
-	// DeleteMeetingPath - v2 delete a meeting
-	DeleteMeetingPath = "/meetings/%d"
-
-	// ListMeetingTypeScheduled is a meeting that is scheduled
-	ListMeetingTypeScheduled ListMeetingType = "scheduled"
-	// ListMeetingTypeLive is a live meeting
-	ListMeetingTypeLive ListMeetingType = "live" // DEFAULT
-	// ListMeetingTypeUpcoming is an upcoming meeting
-	ListMeetingTypeUpcoming ListMeetingType = "upcoming"
-
 	// MeetingTypeInstant is an instant meeting
 	MeetingTypeInstant MeetingType = 1
 	// MeetingTypeScheduled is a scheduled meeting
@@ -107,9 +86,6 @@ const (
 )
 
 type (
-	// ListMeetingType are the allowed meeting types
-	ListMeetingType string
-
 	// MeetingType is the type of the meeting returned by the API
 	MeetingType int
 
@@ -139,38 +115,6 @@ type (
 
 	// WeekDay is the day of the week
 	WeekDay int
-
-	// ListMeetingsOptions contains options for ListMeetings
-	ListMeetingsOptions struct {
-		HostID     string          `url:"-"`
-		Type       ListMeetingType `url:"type,omitempty"`
-		PageSize   *int            `url:"page_size,omitempty"`   // Default: 30, Maximum: 300
-		PageNumber *int            `url:"page_number,omitempty"` // Default: 1
-	}
-
-	// ListMeetingsResponse container the response from a call to ListMeetings
-	ListMeetingsResponse struct {
-		PageCount    int           `json:"page_count"`
-		TotalRecords int           `json:"total_records"`
-		PageNumber   int           `json:"page_number"`
-		PageSize     int           `json:"page_size"`
-		Meetings     []ListMeeting `json:"meetings"`
-	}
-
-	// ListMeeting represents a meeting object returned by ListMeetings endpoint
-	ListMeeting struct {
-		UUID      string      `json:"uuid"`
-		ID        int         `json:"id"`
-		HostID    string      `json:"host_id"`
-		Topic     string      `json:"topic"`
-		Type      MeetingType `json:"type"`
-		StartTime *Time       `json:"start_time"`
-		Duration  int         `json:"duration"`
-		Timezone  string      `json:"timezone"`
-		CreatedAt *Time       `json:"created_at"`
-		JoinURL   string      `json:"join_url"`
-		Agenda    string      `json:"agenda"`
-	}
 
 	// Meeting represents a meeting created/returned by GetMeeting
 	Meeting struct {
@@ -273,99 +217,4 @@ type (
 		// EndDateTime should be in UTC. Cannot be used with "end_times"
 		EndDateTime *Time `json:"end_date_time"`
 	}
-
-	// GetMeetingOptions are the options to get a meeting
-	GetMeetingOptions struct {
-		MeetingID    int    `url:"-"`
-		OccurrenceID string `url:"occurrence_id,omitempty"`
-	}
-
-	// CreateMeetingOptions are the options to create a meeting with
-	CreateMeetingOptions struct {
-		HostID         string          `json:"-"`
-		Topic          string          `json:"topic,omitempty"`
-		Type           MeetingType     `json:"type,omitempty"`
-		StartTime      *Time           `json:"start_time,omitempty"`
-		Duration       int             `json:"duration,omitempty"`
-		Timezone       string          `json:"timezone,omitempty"`
-		Password       string          `json:"password,omitempty"` // Max 10 characters. [a-z A-Z 0-9 @ - _ *]
-		Agenda         string          `json:"agenda,omitempty"`
-		TrackingFields []TrackingField `json:"tracking_fields,omitempty"`
-		Settings       MeetingSettings `json:"settings,omitempty"`
-	}
-
-	// DeleteMeetingOptions are the options to delete a meeting
-	DeleteMeetingOptions struct {
-		MeetingID    int    `url:"-"`
-		OccurrenceID string `url:"occurrence_id,omitempty"`
-		// ScheduleForReminder notify host and alternative host about meeting cancellation via
-		// email
-		ScheduleForReminder bool `url:"schedule_for_reminder,omitempty"`
-	}
 )
-
-// ListMeetings calls /users/ID/meetings
-func ListMeetings(opts ListMeetingsOptions) (ListMeetingsResponse, error) {
-	return defaultClient.ListMeetings(opts)
-}
-
-// ListMeetings calls /users/ID/meetings
-// https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meetings
-func (c *Client) ListMeetings(opts ListMeetingsOptions) (ListMeetingsResponse, error) {
-	var ret = ListMeetingsResponse{}
-	return ret, c.requestV2(requestV2Opts{
-		Method:        Get,
-		Path:          fmt.Sprintf(ListMeetingsPath, opts.HostID),
-		URLParameters: &opts,
-		Ret:           &ret,
-	})
-}
-
-// GetMeeting calls /meetings/ID
-func GetMeeting(opts GetMeetingOptions) (Meeting, error) {
-	return defaultClient.GetMeeting(opts)
-}
-
-// GetMeeting calls /meetings/ID
-// https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meeting
-func (c *Client) GetMeeting(opts GetMeetingOptions) (Meeting, error) {
-	var ret = Meeting{}
-	return ret, c.requestV2(requestV2Opts{
-		Method:        Get,
-		Path:          fmt.Sprintf(GetMeetingPath, opts.MeetingID),
-		URLParameters: &opts,
-		Ret:           &ret,
-	})
-}
-
-// CreateMeeting calls POST /users/{userId}/meetings
-func CreateMeeting(opts CreateMeetingOptions) (Meeting, error) {
-	return defaultClient.CreateMeeting(opts)
-}
-
-// CreateMeeting calls POST /users/{userId}/meetings
-// https://marketplace.zoom.us/docs/api-reference/zoom-api/meetings/meetingcreate
-func (c *Client) CreateMeeting(opts CreateMeetingOptions) (Meeting, error) {
-	var ret = Meeting{}
-	return ret, c.requestV2(requestV2Opts{
-		Method:         Post,
-		Path:           fmt.Sprintf(CreateMeetingPath, opts.HostID),
-		DataParameters: &opts,
-		Ret:            &ret,
-	})
-}
-
-// DeleteMeeting calls POST /meetings/{meetingID}
-func DeleteMeeting(opts DeleteMeetingOptions) error {
-	return defaultClient.DeleteMeeting(opts)
-}
-
-// DeleteMeeting calls DELETE /meetings/{meetingID}
-func (c *Client) DeleteMeeting(opts DeleteMeetingOptions) error {
-	return c.requestV2(requestV2Opts{
-		Method:        Delete,
-		Path:          fmt.Sprintf(DeleteMeetingPath, opts.MeetingID),
-		URLParameters: &opts,
-		HeadResponse:  true,
-	})
-}
