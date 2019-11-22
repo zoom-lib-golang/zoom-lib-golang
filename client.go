@@ -62,6 +62,8 @@ type requestV2Opts struct {
 	Path           string
 	DataParameters interface{}
 	Ret            interface{}
+	// HeadResponse represents responses that don't have a body
+	HeadResponse bool
 }
 
 func initializeDefault(c *Client) *Client {
@@ -135,6 +137,11 @@ func (c *Client) requestV2(opts requestV2Opts) error {
 	resp, err := c.executeRequest(opts)
 	if err != nil {
 		return err
+	}
+
+	// If there is no body in response and there were no errors, just return
+	if opts.HeadResponse {
+		return nil
 	}
 
 	// read HTTP response
