@@ -55,11 +55,11 @@ type (
 	ListAllRecordingsOptions struct {
 		UserID        string `url:"-"`
 		PageSize      *int   `url:"page_size,omitempty"`
-		NextPageToken string `json:"next_page_token,omitempty"`
-		Mc            string `json:"mc"`
-		Trash         bool   `json:"trash"`
-		From          string `json:"from"`
-		To            string `json:"to"`
+		NextPageToken string `url:"next_page_token,omitempty"`
+		Mc            string `url:"mc"`
+		Trash         bool   `url:"trash"`
+		From          string `url:"from"`
+		To            string `url:"to"`
 	}
 )
 
