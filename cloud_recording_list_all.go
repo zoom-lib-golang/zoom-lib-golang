@@ -17,6 +17,9 @@ type (
 	TrashType string
 
 	// ListAllRecordingsOptions contains options for ListAllRecordings.
+	// NOTE: The query URL parser doesn't like non time.Time fields. It just
+	// ignores this field if it's a zoom.Date or a zoom.Time. Instead use a
+	// `string` for `From` and `To` - see below.
 	ListAllRecordingsOptions struct {
 		UserID        string `url:"-"`
 		PageSize      *int   `url:"page_size,omitempty"`
