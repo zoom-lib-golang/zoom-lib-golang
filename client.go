@@ -3,6 +3,7 @@ package zoom
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -62,6 +63,8 @@ type requestV2Opts struct {
 	Path           string
 	DataParameters interface{}
 	Ret            interface{}
+	// HeadResponse represents responses that don't have a body
+	HeadResponse bool
 }
 
 func initializeDefault(c *Client) *Client {
@@ -137,6 +140,15 @@ func (c *Client) requestV2(opts requestV2Opts) error {
 		return err
 	}
 
+	// If there is no body in response
+	if opts.HeadResponse {
+		return c.requestV2HeadOnly(resp)
+	}
+
+	return c.requestV2WithBody(opts, resp)
+}
+
+func (c *Client) requestV2WithBody(opts requestV2Opts, resp *http.Response) error {
 	// read HTTP response
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
@@ -155,4 +167,13 @@ func (c *Client) requestV2(opts requestV2Opts) error {
 
 	// unmarshal the response body into the return object
 	return json.Unmarshal(body, &opts.Ret)
+}
+
+func (c *Client) requestV2HeadOnly(resp *http.Response) error {
+	if resp.StatusCode != 204 {
+		return errors.New(resp.Status)
+	}
+
+	// there were no errors, just return
+	return nil
 }
