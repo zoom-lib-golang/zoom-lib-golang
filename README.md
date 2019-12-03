@@ -41,16 +41,6 @@ export ZOOM_EXAMPLE_EMAIL="<account email>"
 go test -tags integration -v ./...
 ```
 
-## Known Issues
-
-- [ ] Calls to `/webinar/get` will return webinar occurrences that have
-  been deleted with no indication of status (per [this
-forum post](https://support.zoom.us/hc/en-us/community/posts/115010565986--webinar-get-returns-deleted-occurrence))
-- [ ] Behavior of the `occurrence_ids` field in `/webinar/register` is
-  unclear - see [this
-forum post](https://support.zoom.us/hc/en-us/community/posts/115019165043-Behavior-of-occurrence-ids-in-webinar-register-?page=1#community_comment_115004843466)
-for more details
-
 ## Contributing
 
 Contributions welcome! Please see the [contributing
