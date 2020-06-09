@@ -3,6 +3,7 @@ package zoom // Use this file for /user endpoints
 // CreateUserPath - v2 path for creating a user
 const CreateUserPath = "/users"
 
+// CreateUserInfo are details about a user to create
 type CreateUserInfo struct {
 	Email     string   `json:"email"`
 	Type      UserType `json:"type"`
