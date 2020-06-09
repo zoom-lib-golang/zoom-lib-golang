@@ -1,5 +1,8 @@
 package zoom // types for /user endpoints
 
+// CreateUserAction specifies how to create a new user
+type CreateUserAction string
+
 // UserType is one of a fixed number of possible user types
 type UserType int
 
@@ -10,6 +13,18 @@ type UserLoginType int
 type UserStatus string
 
 const (
+	// Create action will be send new user a confirmation email required to activate
+	Create CreateUserAction = "create"
+
+	// AutoCreate action does not send the user a confirmation email
+	AutoCreate CreateUserAction = "autoCreate"
+
+	// CustCreate action creates a user without a password that cannot log into Zoom web portal or Zoom client
+	CustCreate CreateUserAction = "custCreate"
+
+	// SSOCreate action is provided for when the "Pre-Provisioning SSO User" option is enabled
+	SSOCreate CreateUserAction = "ssoCreate"
+
 	// Basic user type
 	Basic UserType = 1
 
@@ -19,13 +34,13 @@ const (
 	// Corporate user type
 	Corporate UserType = 3
 
-	//Facebook user login type
+	// Facebook user login type
 	Facebook UserLoginType = 0
 
-	//Google user login type
+	// Google user login type
 	Google UserLoginType = 1
 
-	//API user login type
+	// API user login type
 	API UserLoginType = 99
 
 	// Zoom user login type

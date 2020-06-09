@@ -44,3 +44,30 @@ func TestGetUser(t *testing.T) {
 		t.Fatalf("expected %s, got %s\n", primaryUser, user.Email)
 	}
 }
+
+func TestCreateUser(t *testing.T) {
+	var (
+		apiKey      = os.Getenv("ZOOM_API_KEY")
+		apiSecret   = os.Getenv("ZOOM_API_SECRET")
+		primaryUser = os.Getenv("ZOOM_EXAMPLE_EMAIL")
+	)
+
+	APIKey = apiKey
+	APISecret = apiSecret
+
+	opts := CreateUserOptions{
+		Action: Create,
+		UserInfo: CreateUserInfo{
+			Type:  Basic,
+			Email: primaryUser,
+		},
+	}
+	user, err := CreateUser(opts)
+	if err != nil {
+		t.Fatalf("got error creating user: %+v\n", err)
+	}
+
+	if user.Email != primaryUser {
+		t.Fatalf("expected %s, got %s\n", primaryUser, user.Email)
+	}
+}
