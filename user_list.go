@@ -1,14 +1,7 @@
-package zoom // Use this file for /user endpoints
+package zoom
 
-import "fmt"
-
-const (
-	// ListUsersPath - v2 path for listing users
-	ListUsersPath = "/users"
-
-	// GetUserPath - v2 path for getting a specific user
-	GetUserPath = "/users/%s"
-)
+// ListUsersPath - v2 path for listing users
+const ListUsersPath = "/users"
 
 // ListUsersResponse contains the response from a call to ListUsers
 type ListUsersResponse struct {
@@ -37,28 +30,6 @@ func (c *Client) ListUsers(opts ListUsersOptions) (ListUsersResponse, error) {
 	return ret, c.requestV2(requestV2Opts{
 		Method:        Get,
 		Path:          ListUsersPath,
-		URLParameters: opts,
-		Ret:           &ret,
-	})
-}
-
-// GetUserOpts contains options for GetUser
-type GetUserOpts struct {
-	EmailOrID string         `url:"-"`
-	LoginType *UserLoginType `url:"login_type,omitempty"` // use pointer so it can be null
-}
-
-// GetUser calls /users/{userId}, searching for a user by ID or email, using the default client
-func GetUser(opts GetUserOpts) (User, error) {
-	return defaultClient.GetUser(opts)
-}
-
-// GetUser calls /users/{userId}, searching for a user by ID or email, using a specific client
-func (c *Client) GetUser(opts GetUserOpts) (User, error) {
-	var ret = User{}
-	return ret, c.requestV2(requestV2Opts{
-		Method:        Get,
-		Path:          fmt.Sprintf(GetUserPath, opts.EmailOrID),
 		URLParameters: opts,
 		Ret:           &ret,
 	})

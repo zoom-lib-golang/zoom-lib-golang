@@ -3,8 +3,11 @@
 package zoom
 
 import (
+	"fmt"
 	"os"
+	"strings"
 	"testing"
+	"time"
 )
 
 func TestListUsers(t *testing.T) {
@@ -42,5 +45,44 @@ func TestGetUser(t *testing.T) {
 
 	if user.Email != primaryUser {
 		t.Fatalf("expected %s, got %s\n", primaryUser, user.Email)
+	}
+}
+
+func TestCreateDeleteUser(t *testing.T) {
+	var (
+		apiKey      = os.Getenv("ZOOM_API_KEY")
+		apiSecret   = os.Getenv("ZOOM_API_SECRET")
+		primaryUser = os.Getenv("ZOOM_EXAMPLE_EMAIL")
+	)
+
+	APIKey = apiKey
+	APISecret = apiSecret
+
+	ms := time.Now().Unix() * int64(time.Microsecond)
+	email := strings.Replace(primaryUser, "@", fmt.Sprintf("%d@", ms), 1)
+
+	createOpts := CreateUserOptions{
+		Action: Create,
+		UserInfo: CreateUserInfo{
+			Type:  Basic,
+			Email: email,
+		},
+	}
+	user, err := CreateUser(createOpts)
+	if err != nil {
+		t.Fatalf("got error creating user: %+v\n", err)
+	}
+
+	if user.Email != email {
+		t.Fatalf("expected %s, got %s\n", email, user.Email)
+	}
+
+	deleteOpts := DeleteUserOptions{
+		EmailOrID: user.Email,
+		Action:    DeleteAction,
+	}
+	err = DeleteUser(deleteOpts)
+	if err != nil {
+		t.Fatalf("got error deleting user: %+v\n", err)
 	}
 }
