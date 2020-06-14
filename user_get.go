@@ -1,4 +1,4 @@
-package zoom // Use this file for /user endpoints
+package zoom
 
 import "fmt"
 

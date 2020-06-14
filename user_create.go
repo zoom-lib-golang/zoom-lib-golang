@@ -1,4 +1,4 @@
-package zoom // Use this file for /user endpoints
+package zoom
 
 // CreateUserPath - v2 path for creating a user
 const CreateUserPath = "/users"

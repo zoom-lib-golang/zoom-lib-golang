@@ -1,4 +1,4 @@
-package zoom // Use this file for /user endpoints
+package zoom
 
 // ListUsersPath - v2 path for listing users
 const ListUsersPath = "/users"

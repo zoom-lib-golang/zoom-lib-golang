@@ -3,6 +3,9 @@ package zoom // types for /user endpoints
 // CreateUserAction specifies how to create a new user
 type CreateUserAction string
 
+// DeleteUserAction specifies how to delete a new user
+type DeleteUserAction string
+
 // UserType is one of a fixed number of possible user types
 type UserType int
 
@@ -25,14 +28,20 @@ const (
 	// SSOCreate action is provided for when the "Pre-Provisioning SSO User" option is enabled
 	SSOCreate CreateUserAction = "ssoCreate"
 
+	// DisassociateAction action disassociates a user
+	DisassociateAction DeleteUserAction = "disassociate"
+
+	// DeleteAction action deletes a user
+	DeleteAction DeleteUserAction = "delete"
+
 	// Basic user type
 	Basic UserType = 1
 
-	// Pro user type
-	Pro UserType = 2
+	// Licensed user type
+	Licensed UserType = 2
 
-	// Corporate user type
-	Corporate UserType = 3
+	// OnPrem user type
+	OnPrem UserType = 3
 
 	// Facebook user login type
 	Facebook UserLoginType = 0
@@ -64,10 +73,10 @@ func (t UserType) String() (str string) {
 	switch t {
 	case Basic:
 		str = "basic"
-	case Pro:
-		str = "pro"
-	case Corporate:
-		str = "corporate"
+	case Licensed:
+		str = "licensed"
+	case OnPrem:
+		str = "onPrem"
 	}
 	return
 }

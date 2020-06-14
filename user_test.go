@@ -3,8 +3,11 @@
 package zoom
 
 import (
+	"fmt"
 	"os"
+	"strings"
 	"testing"
+	"time"
 )
 
 func TestListUsers(t *testing.T) {
@@ -45,7 +48,7 @@ func TestGetUser(t *testing.T) {
 	}
 }
 
-func TestCreateUser(t *testing.T) {
+func TestCreateDeleteUser(t *testing.T) {
 	var (
 		apiKey      = os.Getenv("ZOOM_API_KEY")
 		apiSecret   = os.Getenv("ZOOM_API_SECRET")
@@ -55,19 +58,31 @@ func TestCreateUser(t *testing.T) {
 	APIKey = apiKey
 	APISecret = apiSecret
 
-	opts := CreateUserOptions{
+	ms := time.Now().Unix() * int64(time.Microsecond)
+	email := strings.Replace(primaryUser, "@", fmt.Sprintf("%d@", ms), 1)
+
+	createOpts := CreateUserOptions{
 		Action: Create,
 		UserInfo: CreateUserInfo{
 			Type:  Basic,
-			Email: primaryUser,
+			Email: email,
 		},
 	}
-	user, err := CreateUser(opts)
+	user, err := CreateUser(createOpts)
 	if err != nil {
 		t.Fatalf("got error creating user: %+v\n", err)
 	}
 
-	if user.Email != primaryUser {
-		t.Fatalf("expected %s, got %s\n", primaryUser, user.Email)
+	if user.Email != email {
+		t.Fatalf("expected %s, got %s\n", email, user.Email)
+	}
+
+	deleteOpts := DeleteUserOptions{
+		EmailOrID: user.Email,
+		Action:    DeleteAction,
+	}
+	err = DeleteUser(deleteOpts)
+	if err != nil {
+		t.Fatalf("got error deleting user: %+v\n", err)
 	}
 }

@@ -14,7 +14,7 @@ type DeleteMeetingOptions struct {
 // DeleteMeetingPath - v2 delete a meeting
 const DeleteMeetingPath = "/meetings/%d"
 
-// DeleteMeeting calls POST /meetings/{meetingID}
+// DeleteMeeting calls DELETE /meetings/{meetingID}
 func DeleteMeeting(opts DeleteMeetingOptions) error {
 	return defaultClient.DeleteMeeting(opts)
 }
