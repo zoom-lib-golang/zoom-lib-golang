@@ -62,7 +62,7 @@ func TestCreateDeleteUser(t *testing.T) {
 	email := strings.Replace(primaryUser, "@", fmt.Sprintf("%d@", ms), 1)
 
 	createOpts := CreateUserOptions{
-		Action: Create,
+		Action: CustCreate,
 		UserInfo: CreateUserInfo{
 			Type:  Basic,
 			Email: email,
