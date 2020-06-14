@@ -39,7 +39,7 @@ _lint_verbose() {
 
 _install_linter() {
   if [[ ! -x "${GOPATH}/bin/golint" ]] ; then
-    go get -u github.com/golang/lint/golint
+    GO111MODULE=off go get -u golang.org/x/lint/golint
   fi
 }
 
