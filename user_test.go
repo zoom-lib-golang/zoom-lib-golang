@@ -1,5 +1,3 @@
-// +build integration
-
 package zoom
 
 import (
@@ -84,5 +82,24 @@ func TestCreateDeleteUser(t *testing.T) {
 	err = DeleteUser(deleteOpts)
 	if err != nil {
 		t.Fatalf("got error deleting user: %+v\n", err)
+	}
+}
+
+func Test_DeleteUserSSOToken(t *testing.T) {
+	var (
+		apiKey      = os.Getenv("ZOOM_API_KEY")
+		apiSecret   = os.Getenv("ZOOM_API_SECRET")
+		primaryUser = os.Getenv("ZOOM_EXAMPLE_EMAIL")
+	)
+
+	APIKey = apiKey
+	APISecret = apiSecret
+
+	deleteSSOopts := DeleteUserSSOTokenOptions{
+		EmailOrID: primaryUser,
+	}
+	err := DeleteUserSSOToken(deleteSSOopts)
+	if err != nil {
+		t.Fatalf("Error deleting user SSO Token: %+v\n", err)
 	}
 }

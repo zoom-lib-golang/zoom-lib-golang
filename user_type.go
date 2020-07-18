@@ -6,6 +6,9 @@ type CreateUserAction string
 // DeleteUserAction specifies how to delete a new user
 type DeleteUserAction string
 
+// DeleteUserSSOTokenAction specifies how to delete a user's SSO token
+type DeleteUserSSOTokenAction string
+
 // UserType is one of a fixed number of possible user types
 type UserType int
 
@@ -27,6 +30,9 @@ const (
 
 	// SSOCreate action is provided for when the "Pre-Provisioning SSO User" option is enabled
 	SSOCreate CreateUserAction = "ssoCreate"
+
+	// SSODelete action is provided to delete a user's SSO token
+	SSODelete DeleteUserSSOTokenAction = "ssoDelete"
 
 	// DisassociateAction action disassociates a user
 	DisassociateAction DeleteUserAction = "disassociate"
