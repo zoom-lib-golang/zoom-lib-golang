@@ -3,6 +3,9 @@ package zoom // types for /user endpoints
 // CreateUserAction specifies how to create a new user
 type CreateUserAction string
 
+// UpdateUserStatusAction specifies how to update the status of a user (activate or deactivate)
+type UpdateUserStatusAction string
+
 // DeleteUserAction specifies how to delete a new user
 type DeleteUserAction string
 
@@ -30,6 +33,12 @@ const (
 
 	// SSOCreate action is provided for when the "Pre-Provisioning SSO User" option is enabled
 	SSOCreate CreateUserAction = "ssoCreate"
+
+	// StatusActivate action will "enable" a deactivated user
+	StatusActivate UpdateUserStatusAction = "activate"
+
+	// StatusDeactivate action will "disable" an active user
+	StatusDeactivate UpdateUserStatusAction = "deactivate"
 
 	// SSODelete action is provided to delete a user's SSO token
 	SSODelete DeleteUserSSOTokenAction = "ssoDelete"

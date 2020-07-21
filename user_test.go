@@ -85,6 +85,50 @@ func TestCreateDeleteUser(t *testing.T) {
 	}
 }
 
+func Test_UpdateUserStatus_Activate(t *testing.T) {
+	var (
+		apiKey      = os.Getenv("ZOOM_API_KEY")
+		apiSecret   = os.Getenv("ZOOM_API_SECRET")
+		primaryUser = os.Getenv("ZOOM_EXAMPLE_EMAIL")
+	)
+
+	APIKey = apiKey
+	APISecret = apiSecret
+
+	updateURLOpts := UpdateUserStatusURLOptions{
+		EmailOrID: primaryUser,
+	}
+	updateDataOpts := UpdateUserStatusDataOptions{
+		Action: StatusActivate,
+	}
+	err := UpdateUserStatus(updateURLOpts, updateDataOpts)
+	if err != nil {
+		t.Fatalf("Error updating user status: %+v\n", err)
+	}
+}
+
+func Test_UpdateUserStatus_Deactivate(t *testing.T) {
+	var (
+		apiKey      = os.Getenv("ZOOM_API_KEY")
+		apiSecret   = os.Getenv("ZOOM_API_SECRET")
+		primaryUser = os.Getenv("ZOOM_EXAMPLE_EMAIL")
+	)
+
+	APIKey = apiKey
+	APISecret = apiSecret
+
+	updateURLOpts := UpdateUserStatusURLOptions{
+		EmailOrID: primaryUser,
+	}
+	updateDataOpts := UpdateUserStatusDataOptions{
+		Action: StatusDeactivate,
+	}
+	err := UpdateUserStatus(updateURLOpts, updateDataOpts)
+	if err != nil {
+		t.Fatalf("Error updating user status: %+v\n", err)
+	}
+}
+
 func Test_DeleteUserSSOToken(t *testing.T) {
 	var (
 		apiKey      = os.Getenv("ZOOM_API_KEY")
