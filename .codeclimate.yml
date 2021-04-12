@@ -15,9 +15,10 @@ plugins:
   duplication:
     enabled: true
     config:
-      count_threshold: 5
+      count_threshold: 7
 exclude_patterns:
   - "**/*_test.go"
   - "*_test.go"
   - "vendor/"
   - "_example/webinar.go"
+  - "_example/add_group_member.go"
