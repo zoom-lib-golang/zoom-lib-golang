@@ -47,14 +47,16 @@ type (
 	// CloudRecordingMeeting represents a zoom meeting object
 	CloudRecordingMeeting struct {
 		UUID           string          `json:"uuid"`
-		ID             string          `json:"id"`
+		ID             int             `json:"id"`
 		AccountID      string          `json:"account_id"`
 		HostID         string          `json:"host_id"`
 		Topic          string          `json:"topic"`
+		Type           int             `json:"type"`
 		StartTime      *Time           `json:"start_time"`
 		Duration       int             `json:"duration"`
-		TotalSize      string          `json:"total_size"`
-		RecordingCount string          `json:"recording_count"`
+		TotalSize      int             `json:"total_size"`
+		ShareURL       string          `json:"share_url"`
+		RecordingCount int             `json:"recording_count"`
 		RecordingFiles []RecordingFile `json:"recording_files"`
 	}
 )
