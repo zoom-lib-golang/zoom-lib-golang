@@ -5,18 +5,21 @@ const ListUsersPath = "/users"
 
 // ListUsersResponse contains the response from a call to ListUsers
 type ListUsersResponse struct {
-	TotalRecords int    `json:"total_records"`
-	PageCount    int    `json:"page_count"`
-	PageNumber   int    `json:"page_number"`
-	PageSize     int    `json:"page_size"`
-	Users        []User `json:"users"`
+	TotalRecords  int    `json:"total_records"`
+	PageCount     int    `json:"page_count"`
+	PageNumber    int    `json:"page_number"`
+	NextPageToken string `json:"next_page_token"`
+	PageSize      int    `json:"page_size"`
+	Users         []User `json:"users"`
 }
 
 // ListUsersOptions contains options for ListUsers
 type ListUsersOptions struct {
-	PageSize   int         `url:"page_size"`
-	PageNumber int         `url:"page_number"`
-	Status     *UserStatus `url:"status,omitempty"`
+	PageSize      int         `url:"page_size"`
+	PageNumber    int         `url:"page_number"`
+	NextPageToken *string     `url:"next_page_token,omitempty"`
+	Status        *UserStatus `url:"status,omitempty"`
+	IncludeFields *[]string   `url:"include_fields,omitempty"`
 }
 
 // ListUsers calls /user/list, listing all users, using the default client
