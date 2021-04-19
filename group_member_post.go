@@ -11,12 +11,6 @@ type AddMemberOptions struct {
 	Members []Member `json:"members"`
 }
 
-// Member represents an group member
-type Member struct {
-	ID    string `json:"id"`
-	Email string `json:"email"`
-}
-
 // ResopnseAddGroupMembers represents response for added member to group
 type ResopnseAddGroupMembers struct {
 	// IDs has comma-delimited, like 'xxxxxxxxxx,xxxxxxxxxx'
