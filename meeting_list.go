@@ -8,19 +8,21 @@ type (
 
 	// ListMeetingsOptions contains options for ListMeetings
 	ListMeetingsOptions struct {
-		HostID     string          `url:"-"`
-		Type       ListMeetingType `url:"type,omitempty"`
-		PageSize   *int            `url:"page_size,omitempty"`   // Default: 30, Maximum: 300
-		PageNumber *int            `url:"page_number,omitempty"` // Default: 1
+		HostID        string          `url:"-"`
+		Type          ListMeetingType `url:"type,omitempty"`
+		PageSize      *int            `url:"page_size,omitempty"`   // Default: 30, Maximum: 300
+		PageNumber    *int            `url:"page_number,omitempty"` // Default: 1
+		NextPageToken *string         `url:"next_page_token,omitempty"`
 	}
 
 	// ListMeetingsResponse container the response from a call to ListMeetings
 	ListMeetingsResponse struct {
-		PageCount    int           `json:"page_count"`
-		TotalRecords int           `json:"total_records"`
-		PageNumber   int           `json:"page_number"`
-		PageSize     int           `json:"page_size"`
-		Meetings     []ListMeeting `json:"meetings"`
+		PageCount     int           `json:"page_count"`
+		TotalRecords  int           `json:"total_records"`
+		PageNumber    int           `json:"page_number"`
+		PageSize      int           `json:"page_size"`
+		Meetings      []ListMeeting `json:"meetings"`
+		NextPageToken string        `json:"next_page_token"`
 	}
 
 	// ListMeeting represents a meeting object returned by ListMeetings endpoint
