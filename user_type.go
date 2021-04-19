@@ -83,53 +83,54 @@ func (t UserType) String() (str string) {
 
 // User represents an account user
 type User struct {
-	Email                            string   `json:"email"`
-	ID                               string   `json:"id"`
-	AccountID                        string   `json:"account_id"`
-	CreatedAt                        Time     `json:"created_at,string"`
-	FirstName                        string   `json:"first_name"`
-	LastName                         string   `json:"last_name"`
-	PicURL                           string   `json:"pic_url"`
-	Type                             UserType `json:"type"`
-	DisableChat                      bool     `json:"disable_chat"`
-	EnableE2eEncryption              bool     `json:"enable_e2e_encryption"`
-	EnableSilentMode                 bool     `json:"enable_silent_mode"`
-	DisableGroupHd                   bool     `json:"disable_group_hd"`
-	DisableRecording                 bool     `json:"disable_recording"`
-	EnableCmr                        bool     `json:"enable_cmr"`
-	EnableAutoRecording              bool     `json:"enable_auto_recording"`
-	EnableCloudAutoRecording         bool     `json:"enable_cloud_auto_recording"`
-	Verified                         int      `json:"verified"`
-	PMI                              int      `json:"pmi"`
-	MeetingCapacity                  int      `json:"meeting_capacity"`
-	EnableWebinar                    bool     `json:"enable_webinar"`
-	WebinarCapacity                  int      `json:"webinar_capacity"`
-	EnableLarge                      bool     `json:"enable_large"`
-	LargeCapacity                    int      `json:"large_capacity"`
-	DisableFeedback                  bool     `json:"disable_feedback"`
-	DisableJbhReminder               bool     `json:"disable_jbh_reminder"`
-	EnableBreakoutRoom               bool     `json:"enable_breakout_room"`
-	EnablePolling                    bool     `json:"enable_polling"`
-	EnableAnnotation                 bool     `json:"enable_annotation"`
-	EnableShareDualCamera            bool     `json:"enable_share_dual_camera"`
-	EnableFarEndCameraControl        bool     `json:"enable_far_end_camera_control"`
-	DisablePrivateChat               bool     `json:"disable_private_chat"`
-	EnableEnterExitChime             bool     `json:"enable_enter_exit_chime"`
-	DisableCancelMeetingNotification bool     `json:"disable_cancel_meeting_notification"`
-	EnableRemoteSupport              bool     `json:"enable_remote_support"`
-	EnableFileTransfer               bool     `json:"enable_file_transfer"`
-	EnableVirtualBackground          bool     `json:"enable_virtual_background"`
-	EnableAttentionTracking          bool     `json:"enable_attention_tracking"`
-	EnableWaitingRoom                bool     `json:"enable_waiting_room"`
-	EnableClosedCaption              bool     `json:"enable_closed_caption"`
-	EnableCoHost                     bool     `json:"enable_co_host"`
-	EnableAutoSavingChats            bool     `json:"enable_auto_saving_chats"`
-	EnablePhoneParticipantsPassword  bool     `json:"enable_phone_participants_password"`
-	EnableAutoDeleteCmr              bool     `json:"enable_auto_delete_cmr"`
-	AutoDeleteCmrDays                int      `json:"auto_delete_cmr_days"`
-	Dept                             string   `json:"dept"`
-	LastClientVersion                string   `json:"lastClientVersion"`
-	LastLoginTime                    string   `json:"lastLoginTime"`
-	Token                            string   `json:"token"`
-	ZPK                              string   `json:"zpk"`
+	// Fields returned in both List & Get
+	ID                string   `json:"id"`
+	FirstName         string   `json:"first_name"`
+	LastName          string   `json:"last_name"`
+	Email             string   `json:"email"`
+	Type              int      `json:"type"`
+	Status            string   `json:"status"`
+	PMI               int      `json:"pmi"`
+	Timezone          string   `json:"timezone"`
+	Dept              string   `json:"dept"`
+	RoleID            string   `json:"role_id"`
+	CreatedAt         Time     `json:"created_at,string"`
+	LastLoginTime     Time     `json:"last_login_time,string"`
+	LastClientVersion string   `json:"last_client_version"`
+	GroupIDs          []string `json:"group_ids"`
+	IMGroupIDs        []string `json:"im_group_ids"`
+	Verified          int      `json:"verified"`
+	// Returned only when specifically requested via include_fields in the List call
+	CustomAttributes []CustomAttribute `json:"custom_attributes"`
+	HostKey          string            `json:"host_key"`
+	// Returned by the Get call only
+	PlanUnitedType     string        `json:"plan_united_type"`
+	UsePMI             bool          `json:"use_pmi"`
+	Language           string        `json:"language"`
+	PhoneNumbers       []PhoneNumber `json:"phone_numbers"`
+	VanityURL          string        `json:"vanity_url"`
+	PersonalMeetingURL string        `json:"personal_meeting_url"`
+	PicURL             string        `json:"pic_url"`
+	CMSUserID          string        `json:"cms_user_id"`
+	AccountID          string        `json:"account_id"`
+	JID                string        `json:"jid"`
+	JobTitle           string        `json:"job_title"`
+	Company            string        `json:"company"`
+	Location           string        `json:"location"`
+	LoginType          int           `json:"login_type"`
+}
+
+// CustomAttribute represents a custom attribute
+type CustomAttribute struct {
+	Key   string `json:"key"`
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
+// PhonNumbers represents represents a custom attribute
+type PhoneNumber struct {
+	Country  string `json:"country"`
+	Code     string `json:"code"`
+	Number   string `json:"number"`
+	Verified bool   `json:"verified"`
 }
