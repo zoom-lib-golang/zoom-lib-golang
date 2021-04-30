@@ -160,13 +160,29 @@ func (c *Client) requestV2WithBody(opts requestV2Opts, resp *http.Response) erro
 		log.Printf("Response Body: %s", string(body))
 	}
 
-	// check for Zoom errors in the response
-	if err := checkError(body); err != nil {
-		return err
+	// If the status implies success then parse the response body and return
+	if resp.StatusCode < 400 {
+		return json.Unmarshal(body, &opts.Ret)
 	}
 
-	// unmarshal the response body into the return object
-	return json.Unmarshal(body, &opts.Ret)
+	// Attempt to parse it as a structured error
+	var parsedError struct{ *APIError }
+	if err := json.Unmarshal(body, &parsedError); err != nil {
+		// Could not parse the error structure.
+		// Some errors are not in JSON format (e.g. 429 is HTML). Convert them into
+		// an error object format.
+		return &APIError{
+			Code:    resp.StatusCode,
+			Message: resp.Status,
+		}
+	}
+
+	// need to explicitly return nil or it will register as an error
+	if parsedError.APIError == nil {
+		return nil
+	}
+
+	return parsedError.APIError
 }
 
 func (c *Client) requestV2HeadOnly(resp *http.Response) error {

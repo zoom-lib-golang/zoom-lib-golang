@@ -1,13 +1,8 @@
 package zoom
 
 import (
-	"encoding/json"
 	"fmt"
 )
-
-type errorContainer struct {
-	*APIError
-}
 
 // APIError contains the code and message returned by any Zoom errors
 type APIError struct {
@@ -25,18 +20,4 @@ func (e *APIError) Error() string {
 	}
 
 	return fmt.Sprintf("Zoom API error %d: \"%s\"", e.Code, e.Message)
-}
-
-func checkError(body []byte) error {
-	var c errorContainer
-	if err := json.Unmarshal(body, &c); err != nil {
-		return err
-	}
-
-	// need to explicitly return nil or it will register as an error
-	if c.APIError == nil {
-		return nil
-	}
-
-	return c.APIError
 }
