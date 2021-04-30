@@ -151,7 +151,7 @@ type (
 
 	// Occurrence is an occurrence object
 	Occurrence struct {
-		ID        int    `json:"occurrence_id"`
+		ID        string `json:"occurrence_id"`
 		StartTime *Time  `json:"start_time"`
 		Duration  int    `json:"duration"`
 		Status    string `json:"status"`
