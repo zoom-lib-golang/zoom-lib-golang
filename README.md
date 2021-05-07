@@ -43,14 +43,10 @@ go test -tags integration -v ./...
 
 ## Contributing
 
-Contributions welcome! Please see the [contributing
-guidelines](CONTRIBUTING.md) for more details.
+Contributions welcome! Please see the [contributing guidelines](CONTRIBUTING.md) for more details.
 
 ## Contact
 
-For any questions regarding this library, please contact
-[@rafecolton](https://github.com/rafecolton) or the Himalayan Institute
-webteam at webteam@himalayaninstitute.org
+For any questions regarding this library, please contact [@rafecolton](https://github.com/rafecolton)
 
-Code inspired by
-[mattbaird/gochimp](https://github.com/mattbaird/gochimp)
+Code inspired by [mattbaird/gochimp](https://github.com/mattbaird/gochimp)
