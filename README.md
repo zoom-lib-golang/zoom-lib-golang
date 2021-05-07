@@ -1,7 +1,7 @@
 # Zoom.us Golang Client Library
 
 [![Godoc](https://godoc.org/github.com/zoom-lib-golang/zoom-lib-golang?status.svg)](https://godoc.org/github.com/zoom-lib-golang/zoom-lib-golang)
-[![Build Status](https://travis-ci.org/zoom-lib-golang/zoom-lib-golang.svg?branch=master)](https://travis-ci.org/zoom-lib-golang/zoom-lib-golang)
+[![Build Status](https://travis-ci.org/zoom-lib-golang/zoom-lib-golang.svg?branch=main)](https://travis-ci.org/zoom-lib-golang/zoom-lib-golang)
 [![Go Report Card](https://goreportcard.com/badge/github.com/zoom-lib-golang/zoom-lib-golang)](https://goreportcard.com/report/github.com/zoom-lib-golang/zoom-lib-golang)
 [![CodeClimate Maintainability](https://api.codeclimate.com/v1/badges/55b7484e20c0aaae35d7/maintainability)](https://codeclimate.com/github/zoom-lib-golang/zoom-lib-golang/maintainability)
 
