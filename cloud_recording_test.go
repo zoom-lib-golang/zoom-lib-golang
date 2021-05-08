@@ -43,7 +43,7 @@ func TestGetMeetingRecordingsNoRecording(t *testing.T) {
 		MeetingID: "FooBar",
 	})
 
-	expected := `Zoom API error 3301: "There is no recording for this meeting"`
+	expected := `Zoom API error 3301: "This recording does not exist."`
 	actual := err.Error()
 
 	if actual != expected {
