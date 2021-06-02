@@ -192,6 +192,8 @@ type (
 		ContactEmail        string               `json:"contact_email,omitempty"`
 		// Send confirmation email to registrants
 		RegistrantsConfirmationEmail bool `json:"registrants_confirmation_email,omitempty"`
+		// Breakout room settings
+		BreakoutRooms BreakoutRoomSettings `json:"breakout_room,omitempty"`
 	}
 
 	// GlobalDialInNumber is a global dial in number
@@ -216,5 +218,17 @@ type (
 		EndTimes int `json:"end_times"`
 		// EndDateTime should be in UTC. Cannot be used with "end_times"
 		EndDateTime *Time `json:"end_date_time"`
+	}
+
+	// BreakoutRoomSettings represents the breakout rooms for a meetings
+	BreakoutRoomSettings struct {
+		Enable bool           `json:"enable"`
+		Rooms  []BreakoutRoom `json:"rooms"`
+	}
+
+	// BreakoutRoom contains settings for an individual breakout room
+	BreakoutRoom struct {
+		Name         string   `json:"name"`
+		Participants []string `json:"participants"`
 	}
 )
