@@ -186,10 +186,10 @@ type (
 		// CloseRegistration after event date
 		CloseRegistration bool `json:"close_registration,omitempty"`
 		// Enable waiting room
-		WaitingRoom        bool                 `json:"waiting_room,omitempty"`
-		GobalDialInNumbers []GlobalDialInNumber `json:"global_dial_in_numbers,omitempty"`
-		ContactName        string               `json:"contact_name,omitempty"`
-		ContactEmail       string               `json:"contact_email,omitempty"`
+		WaitingRoom         bool                 `json:"waiting_room,omitempty"`
+		GlobalDialInNumbers []GlobalDialInNumber `json:"global_dial_in_numbers,omitempty"`
+		ContactName         string               `json:"contact_name,omitempty"`
+		ContactEmail        string               `json:"contact_email,omitempty"`
 		// Send confirmation email to registrants
 		RegistrantsConfirmationEmail bool `json:"registrants_confirmation_email,omitempty"`
 	}
