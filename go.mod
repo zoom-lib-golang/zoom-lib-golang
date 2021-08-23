@@ -1,6 +1,6 @@
 module github.com/zoom-lib-golang/zoom-lib-golang
 
-go 1.13
+go 1.16
 
 retract v1.0.0
 
