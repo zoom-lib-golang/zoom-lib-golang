@@ -1,4 +1,4 @@
-module github.com/himalayan-institute/zoom-lib-golang
+module github.com/zoom-lib-golang/zoom-lib-golang
 
 go 1.13
 
