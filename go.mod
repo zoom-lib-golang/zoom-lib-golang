@@ -5,7 +5,6 @@ go 1.16
 retract v1.0.0
 
 require (
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
+	github.com/golang-jwt/jwt/v4 v4.0.0
 	github.com/google/go-querystring v1.1.0
-	gopkg.in/dgrijalva/jwt-go.v3 v3.2.0
 )

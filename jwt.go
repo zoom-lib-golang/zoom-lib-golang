@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"gopkg.in/dgrijalva/jwt-go.v3"
+	"github.com/golang-jwt/jwt/v4"
 )
 
 func jwtToken(key string, secret string) (string, error) {
