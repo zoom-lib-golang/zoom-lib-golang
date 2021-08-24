@@ -6,6 +6,8 @@ jobs:
   include:
     - stage: format check
       script: ./fmtpolice
+    - stage: go vet
+      script: go vet
     - stage: tests
       script: go test -v ./...
     - stage: integration tests
