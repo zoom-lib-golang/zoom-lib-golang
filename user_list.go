@@ -14,9 +14,9 @@ type ListUsersResponse struct {
 
 // ListUsersOptions contains options for ListUsers
 type ListUsersOptions struct {
-	PageSize   int         `url:"page_size"`
-	PageNumber int         `url:"page_number"`
-	Status     *UserStatus `url:"status,omitempty"`
+	PageSize   int        `url:"page_size"`
+	PageNumber int        `url:"page_number"`
+	Status     UserStatus `url:"status,omitempty"`
 }
 
 // ListUsers calls /user/list, listing all users, using the default client
