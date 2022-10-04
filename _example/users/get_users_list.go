@@ -17,7 +17,7 @@ func main() {
 	zoom.APISecret = apiSecret
 
 	opt := zoom.ListUsersOptions{
-		PageSize: 15,
+		PageSize:   15,
 		PageNumber: 1,
 	}
 

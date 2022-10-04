@@ -19,11 +19,11 @@ func main() {
 
 	userInfo := zoom.CreateUserInfo{
 		Email: userEmail,
-		Type: zoom.Basic,
+		Type:  zoom.Basic,
 	}
 
-	opt := zoom.CreateUserOptions {
-		Action: zoom.Create,
+	opt := zoom.CreateUserOptions{
+		Action:   zoom.Create,
 		UserInfo: userInfo,
 	}
 
