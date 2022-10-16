@@ -21,10 +21,10 @@ func main() {
 		PageNumber: 1,
 	}
 
-	res, err := zoom.ListUsers(opt)
+	listUsersResponse, err := zoom.ListUsers(opt)
 
 	if err != nil {
 		log.Printf("Error: %+v\n", err)
 	}
-	log.Printf("Resopnse: %+v\n", res)
+	log.Printf("Resopnse: %+v\n", listUsersResponse)
 }

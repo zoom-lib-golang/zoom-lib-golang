@@ -22,7 +22,7 @@ func main() {
 		EmailOrID: userID,
 	}
 
-	response := zoom.DeleteUser(opt)
-
-	log.Printf("Resopnse: %+v\n", response)
+	if err := zoom.DeleteUser(opt); err != nil {
+		log.Printf("Error: %+v\n", err)
+	}
 }

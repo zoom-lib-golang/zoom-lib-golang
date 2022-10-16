@@ -23,22 +23,22 @@ func main() {
 		EmailOrID: userID,
 	}
 
-	response, err := zoom.GetUser(opt)
+	user, err := zoom.GetUser(opt)
 
 	if err != nil {
 		log.Printf("Error: %+v\n", err)
 	}
-	log.Printf("Resopnse: %+v\n", response)
+	log.Printf("Resopnse: %+v\n", user)
 
 	// Get User info by Email
 	opt = zoom.GetUserOpts{
 		EmailOrID: userEmail,
 	}
 
-	response, err = zoom.GetUser(opt)
+	user, err = zoom.GetUser(opt)
 
 	if err != nil {
 		log.Printf("Error: %+v\n", err)
 	}
-	log.Printf("Resopnse: %+v\n", response)
+	log.Printf("Resopnse: %+v\n", user)
 }
