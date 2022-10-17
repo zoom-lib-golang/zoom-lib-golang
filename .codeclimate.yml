@@ -23,3 +23,4 @@ exclude_patterns:
   - "_example/webinar.go"
   - "_example/add_group_member.go"
   - "_example/users/*.go"
+  - "_example/meetings/*.go"
