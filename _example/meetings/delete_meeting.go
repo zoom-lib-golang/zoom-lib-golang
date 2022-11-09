@@ -28,9 +28,7 @@ func main() {
 		MeetingID: id,
 	}
 
-	err = zoom.DeleteMeeting(deleteMeetingOpt)
-
-	if err != nil {
+	if err = zoom.DeleteMeeting(deleteMeetingOpt); err != nil {
 		log.Printf("Error: %+v\n\n", err)
 	}
 }
