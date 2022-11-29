@@ -1,5 +1,6 @@
 package zoom
 
+// CreateGroupsPath -v2 path for add groups 
 const CreateGroupsPath = "/groups"
 
 // CreateGroupOption - options for creating a group
