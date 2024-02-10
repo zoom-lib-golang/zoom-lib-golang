@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -32,10 +33,28 @@ var (
 	defaultClient *Client
 )
 
+type AuthStrategy string
+
+var (
+	JWTAuth              = AuthStrategy("jwt")
+	ServerToServerOAuth2 = AuthStrategy("server-to-server-oauth2")
+
+	zoomAPIUrl = url.URL{
+		Scheme: "https",
+		Host:   apiURI,
+		Path:   apiVersion,
+	}
+)
+
 // Client is responsible for making API requests
 type Client struct {
-	Key       string
-	Secret    string
+	AuthStrategy AuthStrategy
+
+	Key    string
+	Secret string
+
+	oauth2Handler *oauth2Handler
+
 	Transport http.RoundTripper
 	Timeout   time.Duration // set to value > 0 to enable a request timeout
 	endpoint  string
@@ -43,17 +62,33 @@ type Client struct {
 
 // NewClient returns a new API client
 func NewClient(apiKey string, apiSecret string) *Client {
-	var uri = url.URL{
-		Scheme: "https",
-		Host:   apiURI,
-		Path:   apiVersion,
+	return &Client{
+		AuthStrategy: JWTAuth,
+		Key:          apiKey,
+		Secret:       apiSecret,
+		endpoint:     zoomAPIUrl.String(),
+	}
+}
+
+func NewOAuth2Client(accountID, clientID, ClientSecret string) *Client {
+
+	handler := &oauth2Handler{
+		oauthAccountID:    accountID,
+		oauthClientID:     clientID,
+		oauthClientSecret: ClientSecret,
+	}
+	_, err := handler.Authorize()
+	if err != nil {
+		panic(fmt.Sprintf("oauth2 client is not setup for success: %s", err))
 	}
 
 	return &Client{
-		Key:      apiKey,
-		Secret:   apiSecret,
-		endpoint: uri.String(),
+		AuthStrategy:  ServerToServerOAuth2,
+		oauth2Handler: handler,
+
+		endpoint: zoomAPIUrl.String(),
 	}
+
 }
 
 type requestV2Opts struct {
@@ -122,6 +157,7 @@ func (c *Client) httpRequest(opts requestV2Opts) (*http.Request, error) {
 }
 
 func (c *Client) httpClient() *http.Client {
+
 	client := &http.Client{Transport: c.Transport}
 	if c.Timeout > 0 {
 		client.Timeout = c.Timeout
