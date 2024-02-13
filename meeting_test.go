@@ -8,15 +8,14 @@ import (
 )
 
 func TestListMeetings(t *testing.T) {
+	AccountID = os.Getenv("ZOOM_ACCOUNT_ID")
+	ClientID  = os.Getenv("ZOOM_CLIENT_ID")
+	ClientSecret = os.Getenv("ZOOM_CLIENT_SECRET")
+
 	var (
-		apiKey      = os.Getenv("ZOOM_API_KEY")
-		apiSecret   = os.Getenv("ZOOM_API_SECRET")
 		primaryUser = os.Getenv("ZOOM_EXAMPLE_EMAIL")
 		one         = int(1)
 	)
-
-	APIKey = apiKey
-	APISecret = apiSecret
 
 	_, err := ListMeetings(ListMeetingsOptions{
 		HostID:     primaryUser,
@@ -30,14 +29,11 @@ func TestListMeetings(t *testing.T) {
 }
 
 func TestCreateGetDeleteMeeting(t *testing.T) {
-	var (
-		apiKey      = os.Getenv("ZOOM_API_KEY")
-		apiSecret   = os.Getenv("ZOOM_API_SECRET")
-		primaryUser = os.Getenv("ZOOM_EXAMPLE_EMAIL")
-	)
+	AccountID = os.Getenv("ZOOM_ACCOUNT_ID")
+	ClientID  = os.Getenv("ZOOM_CLIENT_ID")
+	ClientSecret = os.Getenv("ZOOM_CLIENT_SECRET")
 
-	APIKey = apiKey
-	APISecret = apiSecret
+	primaryUser := os.Getenv("ZOOM_EXAMPLE_EMAIL")
 
 	user, err := GetUser(GetUserOpts{EmailOrID: primaryUser})
 	if err != nil {
@@ -77,13 +73,9 @@ func TestCreateGetDeleteMeeting(t *testing.T) {
 }
 
 func TestDeleteMeetingFail(t *testing.T) {
-	var (
-		apiKey    = os.Getenv("ZOOM_API_KEY")
-		apiSecret = os.Getenv("ZOOM_API_SECRET")
-	)
-
-	APIKey = apiKey
-	APISecret = apiSecret
+	AccountID = os.Getenv("ZOOM_ACCOUNT_ID")
+	ClientID  = os.Getenv("ZOOM_CLIENT_ID")
+	ClientSecret = os.Getenv("ZOOM_CLIENT_SECRET")
 
 	err := DeleteMeeting(DeleteMeetingOptions{
 		MeetingID: 1234,

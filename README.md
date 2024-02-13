@@ -33,8 +33,9 @@ To run the integration tests:
 
 ```bash
 # first, define the required environment variables
-export ZOOM_API_KEY="<key>"
-export ZOOM_API_SECRET="<secret>"
+export ZOOM_ACCOUNT_ID="<account_id>"
+export ZOOM_CLIENT_ID="<client_id>"
+export ZOOM_CLIENT_SECRET="<secret>"
 export ZOOM_EXAMPLE_EMAIL="<account email>"
 
 # then run the tests with the integration build tag

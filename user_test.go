@@ -11,13 +11,9 @@ import (
 )
 
 func TestListUsers(t *testing.T) {
-	var (
-		apiKey    = os.Getenv("ZOOM_API_KEY")
-		apiSecret = os.Getenv("ZOOM_API_SECRET")
-	)
-
-	APIKey = apiKey
-	APISecret = apiSecret
+	AccountID = os.Getenv("ZOOM_ACCOUNT_ID")
+	ClientID  = os.Getenv("ZOOM_CLIENT_ID")
+	ClientSecret = os.Getenv("ZOOM_CLIENT_SECRET")
 
 	_, err := ListUsers(ListUsersOptions{
 		PageSize:   1,
@@ -29,14 +25,11 @@ func TestListUsers(t *testing.T) {
 }
 
 func TestGetUser(t *testing.T) {
-	var (
-		apiKey      = os.Getenv("ZOOM_API_KEY")
-		apiSecret   = os.Getenv("ZOOM_API_SECRET")
-		primaryUser = os.Getenv("ZOOM_EXAMPLE_EMAIL")
-	)
+	AccountID = os.Getenv("ZOOM_ACCOUNT_ID")
+	ClientID  = os.Getenv("ZOOM_CLIENT_ID")
+	ClientSecret = os.Getenv("ZOOM_CLIENT_SECRET")
 
-	APIKey = apiKey
-	APISecret = apiSecret
+	primaryUser := os.Getenv("ZOOM_EXAMPLE_EMAIL")
 
 	user, err := GetUser(GetUserOpts{EmailOrID: primaryUser})
 	if err != nil {
@@ -49,14 +42,11 @@ func TestGetUser(t *testing.T) {
 }
 
 func TestCreateDeleteUser(t *testing.T) {
-	var (
-		apiKey      = os.Getenv("ZOOM_API_KEY")
-		apiSecret   = os.Getenv("ZOOM_API_SECRET")
-		primaryUser = os.Getenv("ZOOM_EXAMPLE_EMAIL")
-	)
+	AccountID = os.Getenv("ZOOM_ACCOUNT_ID")
+	ClientID  = os.Getenv("ZOOM_CLIENT_ID")
+	ClientSecret = os.Getenv("ZOOM_CLIENT_SECRET")
 
-	APIKey = apiKey
-	APISecret = apiSecret
+	primaryUser := os.Getenv("ZOOM_EXAMPLE_EMAIL")
 
 	ms := time.Now().Unix() * int64(time.Microsecond)
 	email := strings.Replace(primaryUser, "@", fmt.Sprintf("%d@", ms), 1)
