@@ -8,15 +8,14 @@ import (
 )
 
 func TestWebinarList(t *testing.T) {
+	AccountID = os.Getenv("ZOOM_ACCOUNT_ID")
+	ClientID  = os.Getenv("ZOOM_CLIENT_ID")
+	ClientSecret = os.Getenv("ZOOM_CLIENT_SECRET")
+
 	var (
-		apiKey      = os.Getenv("ZOOM_API_KEY")
-		apiSecret   = os.Getenv("ZOOM_API_SECRET")
 		primaryUser = os.Getenv("ZOOM_EXAMPLE_EMAIL")
 		one         = int(1)
 	)
-
-	APIKey = apiKey
-	APISecret = apiSecret
 
 	_, err := ListWebinars(ListWebinarsOptions{
 		HostID:     primaryUser,

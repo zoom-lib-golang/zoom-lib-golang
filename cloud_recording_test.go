@@ -8,15 +8,14 @@ import (
 )
 
 func TestListAllRecordings(t *testing.T) {
+	AccountID = os.Getenv("ZOOM_ACCOUNT_ID")
+	ClientID  = os.Getenv("ZOOM_CLIENT_ID")
+	ClientSecret = os.Getenv("ZOOM_CLIENT_SECRET")
+
 	var (
-		apiKey      = os.Getenv("ZOOM_API_KEY")
-		apiSecret   = os.Getenv("ZOOM_API_SECRET")
 		primaryUser = os.Getenv("ZOOM_EXAMPLE_EMAIL")
 		one         = int(1)
 	)
-
-	APIKey = apiKey
-	APISecret = apiSecret
 
 	_, err := ListAllRecordings(ListAllRecordingsOptions{
 		UserID:   primaryUser,
@@ -31,13 +30,9 @@ func TestListAllRecordings(t *testing.T) {
 }
 
 func TestGetMeetingRecordingsNoRecording(t *testing.T) {
-	var (
-		apiKey    = os.Getenv("ZOOM_API_KEY")
-		apiSecret = os.Getenv("ZOOM_API_SECRET")
-	)
-
-	APIKey = apiKey
-	APISecret = apiSecret
+	AccountID = os.Getenv("ZOOM_ACCOUNT_ID")
+	ClientID  = os.Getenv("ZOOM_CLIENT_ID")
+	ClientSecret = os.Getenv("ZOOM_CLIENT_SECRET")
 
 	_, err := GetMeetingRecordings(GetMeetingRecordingsOptions{
 		MeetingID: "FooBar",

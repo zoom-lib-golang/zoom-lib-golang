@@ -2,6 +2,7 @@ package zoom
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"io/ioutil"
@@ -11,11 +12,13 @@ import (
 	"time"
 
 	"github.com/google/go-querystring/query"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/clientcredentials"
 )
 
 const (
-	apiURI     = "api.zoom.us"
-	apiVersion = "/v2"
+	apiURL     = "https://api.zoom.us/v2"
+	tokenURL   = "https://zoom.us/oauth/token"
 )
 
 var (
@@ -23,37 +26,44 @@ var (
 	// when set to true
 	Debug = false
 
-	// APIKey is a package-wide API key, used when no client is instantiated
-	APIKey string
+	// Package-wide account ID
+	AccountID string
 
-	// APISecret is a package-wide API secret, used when no client is instantiated
-	APISecret string
+	// ClientID is a package-wide client key, used when no client is instantiated
+	ClientID string
+
+	// ClientSecret is a package-wide client secret, used when no client is instantiated
+	ClientSecret string
 
 	defaultClient *Client
 )
 
 // Client is responsible for making API requests
 type Client struct {
-	Key       string
-	Secret    string
-	Transport http.RoundTripper
+	clientcredentials.Config
 	Timeout   time.Duration // set to value > 0 to enable a request timeout
 	endpoint  string
 }
 
 // NewClient returns a new API client
-func NewClient(apiKey string, apiSecret string) *Client {
-	var uri = url.URL{
-		Scheme: "https",
-		Host:   apiURI,
-		Path:   apiVersion,
+func NewClient(accountID, clientID, clientSecret string, scopes []string) (client *Client) {
+	params := url.Values{}
+	params.Add("grant_type", "account_credentials")
+	params.Add("account_id", accountID)
+
+	client = &Client{
+		Config: clientcredentials.Config{
+			ClientID:       clientID,
+			ClientSecret:   clientSecret,
+			TokenURL:       tokenURL,
+			Scopes:         scopes,
+			EndpointParams: params,
+			AuthStyle:      oauth2.AuthStyleInHeader,
+		},
+		endpoint: apiURL,
 	}
 
-	return &Client{
-		Key:      apiKey,
-		Secret:   apiSecret,
-		endpoint: uri.String(),
-	}
+	return
 }
 
 type requestV2Opts struct {
@@ -70,7 +80,7 @@ type requestV2Opts struct {
 func initializeDefault(c *Client) *Client {
 	if c == nil {
 		if defaultClient == nil {
-			defaultClient = NewClient(APIKey, APISecret)
+			defaultClient = NewClient(AccountID, ClientID, ClientSecret, nil)
 		}
 
 		return defaultClient
@@ -81,7 +91,7 @@ func initializeDefault(c *Client) *Client {
 
 func (c *Client) executeRequest(opts requestV2Opts) (*http.Response, error) {
 	client := c.httpClient()
-	req, err := c.addRequestAuth(c.httpRequest(opts))
+	req, err := c.httpRequest(opts)
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +132,7 @@ func (c *Client) httpRequest(opts requestV2Opts) (*http.Request, error) {
 }
 
 func (c *Client) httpClient() *http.Client {
-	client := &http.Client{Transport: c.Transport}
+	client := c.Config.Client(context.TODO())
 	if c.Timeout > 0 {
 		client.Timeout = c.Timeout
 	}

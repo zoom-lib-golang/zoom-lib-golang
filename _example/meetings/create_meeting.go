@@ -8,24 +8,19 @@ import (
 )
 
 func main() {
-	var (
-		apiKey    = os.Getenv("ZOOM_API_KEY")
-		apiSecret = os.Getenv("ZOOM_API_SECRET")
-		userID    = os.Getenv("USER_ID")
-	)
-
-	zoom.APIKey = apiKey
-	zoom.APISecret = apiSecret
+	zoom.AccountID = os.Getenv("ZOOM_ACCOUNT_ID")
+	zoom.ClientID  = os.Getenv("ZOOM_CLIENT_ID")
+	zoom.ClientSecret = os.Getenv("ZOOM_CLIENT_SECRET")
 
 	// Set HostID
 	createMeetingOpt := zoom.CreateMeetingOptions{
-		HostID: userID,
+		HostID: os.Getenv("USER_ID"),
 	}
 
 	meeting, err := zoom.CreateMeeting(createMeetingOpt)
 
 	if err != nil {
-		log.Printf("Error: %+v\n\n", err)
+		log.Fatalf("Error: %+v\n\n", err)
 	}
 	log.Printf("Meeting: %+v\n\n", meeting)
 }
